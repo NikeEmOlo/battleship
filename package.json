@@ -1,0 +1,24 @@
+{
+  "name": "battleship",
+  "version": "1.0.0",
+  "description": "Play Battleship. Coursework for The Odin Project. Final project in the Javascript module.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/.bin/jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NikeEmOlo/battleship.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NikeEmOlo/battleship/issues"
+  },
+  "homepage": "https://github.com/NikeEmOlo/battleship#readme",
+  "devDependencies": {
+    "jest": "^30.4.2"
+  }
+}
