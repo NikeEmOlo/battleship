@@ -6,17 +6,30 @@ const shipTypes = {
   patrol: 2,
 };
 
-export function createShip(name) {
+export function createShip(ship) {
   let hits = 0;
-  let size = shipTypes[name];
+  let coords = [];
+  const size = shipTypes[ship];
 
   return {
-    name,
-    size,
+    ship,
+    get size() {
+      return size;
+    },
     hit: () => (hits += 1),
     isSunk: () => hits >= size,
     get hits() {
       return hits;
+    },
+
+    get coords() {
+      return coords;
+    },
+    get placed() {
+      return coords.length > 0;
+    },
+    setCoords(newCoords) {
+      coords = newCoords;
     },
   };
 }

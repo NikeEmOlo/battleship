@@ -22,3 +22,8 @@ test("sink a ship", () => {
   ship.hit();
   expect(ship.isSunk()).toBe(true);
 });
+
+test("get ship size", () => {
+  const ship = createShip("submarine");
+  expect(ship.size).toBe(3);
+});
