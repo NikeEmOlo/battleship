@@ -27,3 +27,29 @@ test("get ship size", () => {
   const ship = createShip("submarine");
   expect(ship.size).toBe(3);
 });
+
+test("set ship coordinates", () => {
+  const ship = createShip("patrol");
+  const coords = [
+    [0, 0],
+    [0, 1],
+    [0, 2],
+  ];
+  ship.setCoords(coords);
+  expect(ship.coords).toEqual([
+    [0, 0],
+    [0, 1],
+    [0, 2],
+  ]);
+});
+
+test("Check if ship has been placed", () => {
+  const ship = createShip("destroyer");
+  const coords = [
+    [0, 0],
+    [0, 1],
+    [0, 2],
+  ];
+  ship.setCoords(coords);
+  expect(ship.placed).toBe(true);
+});
