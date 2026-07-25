@@ -95,5 +95,9 @@ export function createGameBoard() {
     get shipsPlaced() {
       return shipsPlaced;
     },
+
+    get allSunk() {
+      return Object.values(fleet).every((ship) => ship.isSunk());
+    },
   };
 }

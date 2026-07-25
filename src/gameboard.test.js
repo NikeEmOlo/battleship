@@ -47,6 +47,10 @@ test("receive an attack on a ship", () => {
   expect(board.receiveAttack([0, 0])).toBe(true);
 });
 
+test("Have all ships sunk", () => {
+  expect(board.allSunk).toBe(false);
+});
+
 test("receive a missed attack", () => {
   board.receiveAttack([6, 3]);
   expect(board.missed).toEqual([[6, 3]]);
