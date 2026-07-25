@@ -22,24 +22,38 @@ test("coordinate validation", () => {
 });
 
 test("How many ships are placed?", () => {
-  expect(board.getShipsPlaced()).toBe(0);
+  expect(board.shipsPlaced).toBe(0);
 });
 
 test("toggle rotate value", () => {
   expect(board.toggleRotate()).toBe("vt");
 });
 
+test("toggle rotate value", () => {
+  expect(board.toggleRotate()).toBe("hz");
+});
+
 test("Place a ship on the board", () => {
   board.placeShip([0, 0], "patrol");
-  expect(board.getShipsPlaced()).toBe(1);
+  expect(board.shipsPlaced).toBe(1);
   expect(board.fleet.patrol.coords).toEqual([
     [0, 0],
-    [1, 0],
+    [0, 1],
   ]);
+});
+
+test("receive an attack on a ship", () => {
+  expect(board.receiveAttack([0, 1])).toBe(false);
+  expect(board.receiveAttack([0, 0])).toBe(true);
+});
+
+test("receive a missed attack", () => {
+  board.receiveAttack([6, 3]);
+  expect(board.missed).toEqual([[6, 3]]);
 });
 
 test("remove a ship from the board", () => {
   board.removeShip("patrol");
-  expect(board.getShipsPlaced()).toBe(0);
+  expect(board.shipsPlaced).toBe(0);
   expect(board.fleet.patrol.coords).toEqual([]);
 });

@@ -17,6 +17,7 @@ export function createGameBoard() {
 
   //Gameboard management
   let ready = false;
+  let missed = [];
 
   return {
     fleet,
@@ -59,6 +60,7 @@ export function createGameBoard() {
       if (!ship || !ship.placed) return false;
       ship.setCoords([]);
       shipsPlaced--;
+      if (ready) this.toggleReady();
       return true;
     },
 
@@ -70,7 +72,27 @@ export function createGameBoard() {
       ready = !ready;
     },
 
-    getShipsPlaced() {
+    receiveAttack(coord) {
+      const [x, y] = coord;
+
+      // Search the fleet for any ship occupying this coordinate
+      for (const ship of Object.values(fleet)) {
+        const found = ship.coords.some(([cx, cy]) => cx === x && cy === y);
+        if (found) {
+          ship.hit();
+          return ship.isSunk();
+        }
+      }
+
+      // No ship matched - recorded in array
+      missed.push(coord);
+    },
+
+    get missed() {
+      return missed;
+    },
+
+    get shipsPlaced() {
       return shipsPlaced;
     },
   };
