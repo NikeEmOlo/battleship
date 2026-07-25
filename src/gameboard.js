@@ -1,6 +1,7 @@
 import { createShip } from "./ship.js";
 
 export function createGameBoard() {
+  //Fleet / ship setup
   const fleetConfig = [
     "carrier",
     "battleship",
@@ -8,12 +9,14 @@ export function createGameBoard() {
     "submarine",
     "patrol",
   ];
-
   const fleet = Object.fromEntries(
     fleetConfig.map((ship) => [ship, createShip(ship)]),
   );
   let direction = "hz";
   let shipsPlaced = 0;
+
+  //Gameboard management
+  let ready = false;
 
   return {
     fleet,
@@ -42,6 +45,8 @@ export function createGameBoard() {
       } else {
         return false;
       }
+
+      shipsPlaced >= 5 ? this.toggleReady() : null;
     },
 
     toggleRotate() {
@@ -61,8 +66,8 @@ export function createGameBoard() {
       return array.every(([x, y]) => x >= 0 && x <= 9 && y >= 0 && y <= 9);
     },
 
-    isPlacementComplete() {
-      return shipsPlaced >= 5 ? true : false;
+    toggleReady() {
+      ready = !ready;
     },
 
     getShipsPlaced() {

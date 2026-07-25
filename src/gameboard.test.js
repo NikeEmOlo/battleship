@@ -21,10 +21,6 @@ test("coordinate validation", () => {
   expect(board.coordValidation(coords)).toBe(true);
 });
 
-test("Have all ships been placed?", () => {
-  expect(board.isPlacementComplete()).toBe(false);
-});
-
 test("How many ships are placed?", () => {
   expect(board.getShipsPlaced()).toBe(0);
 });
