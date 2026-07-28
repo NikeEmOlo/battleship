@@ -1,7 +1,14 @@
+dialog {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+}
+
 main {
   display: flex;
   min-height: 100dvh;
   background-color: #fbfbfb;
+  position: relative;
 }
 
 .gameboard-wrap {
