@@ -14,6 +14,34 @@
         <div class="gameboard"></div>
       </div>
       <div class="context"></div>
+      <dialog open id="choose-players">
+        <form method="dialog">
+          <label for="name">What is your name?</label>
+          <input type="text" name="name" id="name" required />
+
+          <fieldset>
+            <legend>Who do you want to battle?</legend>
+
+            <input
+              type="checkbox"
+              name="opponent"
+              id="computer"
+              value="computer"
+            />
+            <label for="computer">Computer</label>
+
+            <input
+              type="checkbox"
+              name="opponent"
+              id="frienemy"
+              value="frienemy"
+            />
+            <label for="frienemy">Frienemy</label>
+          </fieldset>
+
+          <button type="submit">Battle</button>
+        </form>
+      </dialog>
     </main>
   </body>
 </html>
