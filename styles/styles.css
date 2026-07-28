@@ -92,27 +92,27 @@ body {
 }
 
 h1 > img {
-  min-width: 500px;
+  width: clamp(53.125rem, 62.98vw + 12.82rem, 69.5rem);
 }
 
 button {
   display: flex;
   background: none;
   border: none;
-
-  &#play-btn {
-    width: clamp(13.75rem, 13.39vw + 5.18rem, 21.25rem);
-  }
-
-  &#how-to-play {
-    position: absolute;
-    top: 2rem;
-    right: 2rem;
-    width: clamp(9.375rem, 10.04vw + 2.95rem, 15rem);
-  }
 }
 
-img#palm-tree {
+#play-btn {
+  width: clamp(13.75rem, 13.39vw + 5.18rem, 21.25rem);
+}
+
+#how-to-play {
+  position: absolute;
+  top: 2vh;
+  right: 2vw;
+  width: clamp(9.375rem, 10.04vw + 2.95rem, 15rem);
+}
+
+#palm-tree {
   position: absolute;
   bottom: -50px;
   left: -50px;
@@ -120,9 +120,39 @@ img#palm-tree {
   transform: rotate(15deg);
 }
 
-img#seagull {
+#seagull {
   position: absolute;
   bottom: -25px;
   right: -100px;
   transform: rotate(10deg);
+  width: clamp(17.5rem, 18.97vw + 5.36rem, 28.125rem);
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 1rem;
+  }
+
+  h1 {
+    width: calc((100% + 2rem) * 1.1);
+  }
+
+  h1 > img {
+    width: 100%;
+  }
+
+  #play-btn {
+    width: 35vw;
+  }
+
+  #palm-tree {
+    width: 45vw;
+    bottom: -20px;
+  }
+
+  #seagull {
+    width: 45vw;
+    bottom: -20px;
+    right: -80px;
+  }
 }
