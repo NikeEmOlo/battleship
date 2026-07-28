@@ -1,5 +1,3 @@
-const player1Board = document.querySelector(".gameboard");
-
 function createTile(index) {
   const x = Math.floor(index / 10);
   const y = index % 10;
@@ -13,7 +11,7 @@ function createTile(index) {
   return tile;
 }
 
-function displayBoard(board) {
+export function displayBoard(board) {
   for (let i = 0; i < 100; i++) {
     board.appendChild(createTile(i));
   }
