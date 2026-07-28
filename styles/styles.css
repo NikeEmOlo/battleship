@@ -74,3 +74,55 @@ h6 {
 #__next {
   isolation: isolate;
 }
+
+/* ======================== BASE LAYOUT ===================*/
+body {
+  min-height: 100vh;
+}
+
+.home-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-height: 100vh;
+  background: center / cover no-repeat url("/background_math_paper.webp");
+  overflow: hidden;
+}
+
+h1 > img {
+  min-width: 500px;
+}
+
+button {
+  display: flex;
+  background: none;
+  border: none;
+
+  &#play-btn {
+    width: clamp(13.75rem, 13.39vw + 5.18rem, 21.25rem);
+  }
+
+  &#how-to-play {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    width: clamp(9.375rem, 10.04vw + 2.95rem, 15rem);
+  }
+}
+
+img#palm-tree {
+  position: absolute;
+  bottom: -50px;
+  left: -50px;
+  width: clamp(17.5rem, 18.97vw + 5.36rem, 28.125rem);
+  transform: rotate(15deg);
+}
+
+img#seagull {
+  position: absolute;
+  bottom: -25px;
+  right: -100px;
+  transform: rotate(10deg);
+}
