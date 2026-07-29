@@ -156,3 +156,84 @@ main {
   flex: 1;
   min-width: 0;
 }
+
+@media (max-width: 600px) {
+  main:has(dialog[open]) .gameboard-wrap,
+  main:has(dialog[open]) .context {
+    filter: blur(6px);
+  }
+
+  main {
+    display: block;
+  }
+
+  .gameboard-wrap {
+    width: 100%;
+    height: auto;
+  }
+
+  dialog {
+    position: fixed;
+    inset: 0;
+    margin: 0;
+    width: auto;
+    height: auto;
+    aspect-ratio: auto;
+    background: #fbfbfb;
+
+    form {
+      font-size: clamp(1.25rem, 5.5vw, 2rem);
+      justify-content: space-evenly;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 2.5rem 1rem 9rem;
+      overflow-y: auto;
+    }
+
+    .name-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    fieldset {
+      padding: 0;
+    }
+
+    legend {
+      width: 100%;
+      text-align: center;
+    }
+
+    .opponents {
+      grid-template-columns: auto auto;
+      justify-content: center;
+      gap: 0.75rem 0.5em;
+      margin-left: 0;
+    }
+
+    #name,
+    #name-2 {
+      width: 100%;
+      max-width: 20rem;
+    }
+
+    #name {
+      margin-left: 0;
+    }
+
+    #name-2-wrap {
+      width: 100%;
+      text-align: center;
+    }
+
+    button {
+      position: fixed;
+      inset-inline: 0;
+      bottom: 2rem;
+      width: 11rem;
+      margin-inline: auto;
+    }
+  }
+}
