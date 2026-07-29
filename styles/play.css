@@ -14,27 +14,104 @@
   --biro-red: #c4342b;
 }
 
+main {
+  position: relative;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #fbfbfb;
+}
+
+.gameboard-wrap {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100vh, 100vw - 300px);
+  height: 100vh;
+  min-width: 0;
+  padding: 32px;
+}
+
+.gameboard {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  grid-template-rows: repeat(10, minmax(0, 1fr));
+  width: 100%;
+  max-height: 100%;
+  aspect-ratio: 1;
+  background: #f1fafe;
+  border: 1px solid #3cc3d8;
+}
+
+.tile {
+  background-color: #f1fafe;
+  border: 1px solid #3cc3d8;
+}
+
+.context {
+  flex: 1 1 auto;
+  min-width: 300px;
+}
+
 dialog {
   position: absolute;
   inset: 0;
   margin: auto;
-  padding: 0;
   width: 50%;
   height: auto;
   aspect-ratio: 1329 / 924;
+  padding: 0;
   background: center / contain no-repeat url("/ripped_note.png");
   border: none;
   color: var(--biro-blue);
   container-type: inline-size;
 
   form {
+    position: relative;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     height: 100%;
     padding: 2em;
-    justify-content: space-around;
-    position: relative;
     font-size: clamp(0.8rem, 3.15cqw, 2.75rem);
+  }
+
+  label,
+  legend {
+    font-family: var(--handwriting);
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+
+  #name,
+  #name-2 {
+    width: 8em;
+    padding-left: 0.5em;
+    border: none;
+    box-shadow: 1px 0px 3px 0px rgba(60, 34, 52, 0.44);
+    font-family: var(--handwriting);
+    font-size: 1.375em;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+
+  #name {
+    margin-left: 1.5em;
+    background: center / cover no-repeat url("/pink_card_label.png");
+    color: #0015b5;
+    transform: rotate(2deg);
+  }
+
+  #name-2 {
+    background: center / cover no-repeat url("/yellow_card_label.png");
+    color: var(--biro-red);
+  }
+
+  input::placeholder {
+    color: inherit;
+    opacity: 0.5;
   }
 
   fieldset {
@@ -52,119 +129,37 @@ dialog {
   input[type="checkbox"] {
     width: 1.125em;
     height: 1.125em;
-    margin: 0;
     accent-color: var(--biro-blue);
   }
 
-  #name,
-  #name-2 {
-    width: 8em;
-    border: none;
-    box-shadow: 1px 0px 3px 0px rgba(60, 34, 52, 0.44);
-    font-size: 1.375em;
-    color: var(--biro-blue);
-    font-family: var(--handwriting);
-    font-weight: bold;
-    padding-left: 0.5em;
-    text-transform: capitalize;
-  }
-
-  #name {
-    margin-left: 1.5em;
-    background: center / cover no-repeat url("/pink_card_label.png");
-    transform: rotate(2deg);
-    color: #0015b5;
-  }
-
-  #name-2 {
-    background: center / cover no-repeat url("/yellow_card_label.png");
-    color: var(--biro-red);
-  }
-
-  #name-2::placeholder {
-    color: var(--biro-red);
-    opacity: 0.5;
-  }
-
-  input::placeholder {
-    color: var(--biro-blue);
-    opacity: 0.5;
-  }
-
   #name-2-wrap {
-    grid-column: 1 / -1;
     display: none;
+    grid-column: 1 / -1;
   }
 
   #name-2-wrap.two-player {
     display: block;
   }
 
-  label,
-  legend {
-    font-family: var(--handwriting);
-    font-size: 1.5em;
-    font-weight: bold;
-    color: inherit;
-    background: none;
-    border: none;
-  }
-
   button {
     position: absolute;
     right: 2em;
     bottom: 2em;
+    width: 4.7em;
+    padding: 0;
     background: none;
     border: none;
     border-radius: 20px 30px 30px 30px;
-    width: 4.7em;
-    height: auto;
-    padding: 0;
     box-shadow: 4px 6px 10px 0px rgba(0, 0, 0, 0.44);
   }
 }
 
-main {
-  display: flex;
-  min-height: 100dvh;
-  background-color: #fbfbfb;
-  position: relative;
-}
-
-.gameboard-wrap {
-  flex: 0 0 auto;
-  height: 100dvh;
-  aspect-ratio: 1;
-  background: #f1fafe;
-  border: 1px solid #3cc3d8;
-
-  .gameboard {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(10, 1fr);
-    width: 100%;
-    height: 100%;
-
-    .tile {
-      background-color: #f1fafe;
-      border: 1px solid #3cc3d8;
-    }
-  }
-}
-
-.context {
-  flex: 1;
-  min-width: 0;
-}
-
-@media (max-width: 600px) {
-  main:has(dialog[open]) .gameboard-wrap,
-  main:has(dialog[open]) .context {
-    filter: blur(6px);
-  }
-
+@media (max-width: 900px) {
   main {
-    display: block;
+    flex-direction: column;
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
   }
 
   .gameboard-wrap {
@@ -172,21 +167,33 @@ main {
     height: auto;
   }
 
+  .context {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  /* ::backdrop never paints for <dialog open>, so the page behind is blurred
+     by filtering the dialog's siblings instead. */
+  main:has(dialog[open]) .gameboard-wrap,
+  main:has(dialog[open]) .context {
+    filter: blur(6px);
+  }
+
   dialog {
     position: fixed;
     inset: 0;
     margin: 0;
     width: auto;
-    height: auto;
     aspect-ratio: auto;
     background: #fbfbfb;
 
     form {
-      font-size: clamp(1.25rem, 5.5vw, 2rem);
       justify-content: space-evenly;
       align-items: center;
       gap: 1.5rem;
       padding: 2.5rem 1rem 9rem;
+      font-size: clamp(1.25rem, 5.5vw, 2rem);
       overflow-y: auto;
     }
 
