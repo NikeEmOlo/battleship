@@ -1,7 +1,126 @@
+@font-face {
+  font-family: "Puggos Messy Handwriting";
+  src:
+    url("../src/assets/fonts/PuggosMessyHandwriting-Rg.woff2") format("woff2"),
+    url("../src/assets/fonts/PuggosMessyHandwriting-Rg.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --handwriting: "Puggos Messy Handwriting", "Courier New", Courier, monospace;
+  --biro-blue: #3453b5;
+  --biro-red: #c4342b;
+}
+
 dialog {
   position: absolute;
   inset: 0;
   margin: auto;
+  padding: 0;
+  width: 50%;
+  height: auto;
+  aspect-ratio: 1329 / 924;
+  background: center / contain no-repeat url("/ripped_note.png");
+  border: none;
+  color: var(--biro-blue);
+  container-type: inline-size;
+
+  form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 2em;
+    justify-content: space-around;
+    position: relative;
+    font-size: clamp(0.8rem, 3.15cqw, 2.75rem);
+  }
+
+  fieldset {
+    border: none;
+  }
+
+  .opponents {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.25em 0.5em;
+    margin-left: 1.5em;
+  }
+
+  input[type="checkbox"] {
+    width: 1.125em;
+    height: 1.125em;
+    margin: 0;
+    accent-color: var(--biro-blue);
+  }
+
+  #name,
+  #name-2 {
+    width: 8em;
+    border: none;
+    box-shadow: 1px 0px 3px 0px rgba(60, 34, 52, 0.44);
+    font-size: 1.375em;
+    color: var(--biro-blue);
+    font-family: var(--handwriting);
+    font-weight: bold;
+    padding-left: 0.5em;
+  }
+
+  #name {
+    margin-left: 1.5em;
+    background: center / cover no-repeat url("/pink_card_label.png");
+    transform: rotate(2deg);
+    color: #0015b5;
+  }
+
+  #name-2 {
+    background: center / cover no-repeat url("/yellow_card_label.png");
+    color: var(--biro-red);
+  }
+
+  #name-2::placeholder {
+    color: var(--biro-red);
+    opacity: 0.5;
+  }
+
+  input::placeholder {
+    color: var(--biro-blue);
+    opacity: 0.5;
+  }
+
+  #name-2-wrap {
+    grid-column: 1 / -1;
+    display: none;
+  }
+
+  #name-2-wrap.two-player {
+    display: block;
+  }
+
+  label,
+  legend {
+    font-family: var(--handwriting);
+    font-size: 1.5em;
+    font-weight: bold;
+    color: inherit;
+    background: none;
+    border: none;
+  }
+
+  button {
+    position: absolute;
+    right: 2em;
+    bottom: 2em;
+    background: none;
+    border: none;
+    border-radius: 20px 30px 30px 30px;
+    width: 4.7em;
+    height: auto;
+    padding: 0;
+    box-shadow: 4px 6px 10px 0px rgba(0, 0, 0, 0.44);
+  }
 }
 
 main {
