@@ -66,6 +66,7 @@ dialog {
     font-family: var(--handwriting);
     font-weight: bold;
     padding-left: 0.5em;
+    text-transform: capitalize;
   }
 
   #name {
