@@ -1,3 +1,5 @@
+import { formValidation, formSubmission } from "./setup.js";
+
 function createTile(index) {
   const x = Math.floor(index / 10);
   const y = index % 10;
@@ -16,3 +18,12 @@ export function displayBoard(board) {
     board.appendChild(createTile(i));
   }
 }
+
+//================= EVENT LSNRS================//
+const modal = document.querySelector("#choose-players");
+modal.addEventListener("change", formValidation);
+
+const modalForm = document.querySelector("form");
+modalForm.addEventListener("submit", (modalForm) => {
+  formSubmission(modalForm);
+});
