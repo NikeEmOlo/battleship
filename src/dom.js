@@ -1,5 +1,3 @@
-import { formValidation, formSubmission } from "./setup.js";
-
 function createTile(index) {
   const x = Math.floor(index / 10);
   const y = index % 10;
@@ -13,9 +11,25 @@ function createTile(index) {
   return tile;
 }
 
+//Creates a gameboard with 100 tiles
 export function displayBoard(board) {
   for (let i = 0; i < 100; i++) {
     board.appendChild(createTile(i));
+  }
+}
+
+// Form validation, ensures max two players at a time
+const frienemyRadio = document.querySelector("#frienemy");
+const frienemyName = document.querySelector("#name-2-wrap");
+const frienemyNameInput = document.querySelector("#name-2");
+
+export function formValidation(e) {
+  switch (e.target.id) {
+    case "frienemy":
+    case "computer":
+      frienemyName.classList.toggle("two-player", frienemyRadio.checked);
+      frienemyNameInput.required = frienemyRadio.checked ? true : false;
+      break;
   }
 }
 
