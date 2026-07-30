@@ -21,9 +21,9 @@ export function displayBoard(board) {
 
 //================= EVENT LSNRS================//
 const modal = document.querySelector("#choose-players");
-modal.addEventListener("change", formValidation);
+const modalForm = modal.querySelector("form");
 
-const modalForm = document.querySelector("form");
-modalForm.addEventListener("submit", (modalForm) => {
-  formSubmission(modalForm);
+modalForm.addEventListener("change", formValidation);
+modalForm.addEventListener("submit", (e) => {
+  formSubmission(e.currentTarget);
 });

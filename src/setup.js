@@ -16,4 +16,5 @@ export function formValidation(e) {
 export function formSubmission(form) {
   formData = Object.fromEntries(new FormData(form));
   console.log(formData);
+  return formData;
 }
