@@ -133,12 +133,12 @@ dialog {
   }
 
   #name-2-wrap {
-    display: none;
+    visibility: hidden;
     grid-column: 1 / -1;
   }
 
   #name-2-wrap.two-player {
-    display: block;
+    visibility: visible;
   }
 
   button {
