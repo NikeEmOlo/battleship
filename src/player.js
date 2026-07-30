@@ -1,7 +1,7 @@
 import { createGameBoard } from "./gameboard.js";
 
-export function createPlayer(type, name = "Ye who shall not be named") {
-  const playerName = type === "human" ? name : "Compoota";
+export function createPlayer(type, name) {
+  const playerName = name;
   const board = createGameBoard();
 
   return {
