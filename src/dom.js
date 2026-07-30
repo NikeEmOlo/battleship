@@ -25,5 +25,6 @@ const modalForm = modal.querySelector("form");
 
 modalForm.addEventListener("change", formValidation);
 modalForm.addEventListener("submit", (e) => {
-  formSubmission(e.currentTarget);
+  let formData = Object.fromEntries(new FormData(e.currentTarget));
+  gameSetup(formData);
 });

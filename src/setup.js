@@ -1,7 +1,8 @@
+import { createPlayer } from "./player.js";
+
 const frienemyRadio = document.querySelector("#frienemy");
 const frienemyName = document.querySelector("#name-2-wrap");
 const frienemyNameInput = document.querySelector("#name-2");
-let formData;
 
 export function formValidation(e) {
   switch (e.target.id) {
@@ -13,8 +14,10 @@ export function formValidation(e) {
   }
 }
 
-export function formSubmission(form) {
-  formData = Object.fromEntries(new FormData(form));
-  console.log(formData);
-  return formData;
+function gameSetup(formData) {
+  const player1 = createPlayer("human", formData.name);
+  const player2 =
+    formData.opponent === "computer"
+      ? createPlayer("computer")
+      : createPlayer("human", formData["name-2"]);
 }
