@@ -126,7 +126,7 @@ dialog {
     margin-left: 1.5em;
   }
 
-  input[type="checkbox"] {
+  input[type="radio"] {
     width: 1.125em;
     height: 1.125em;
     accent-color: var(--biro-blue);
