@@ -1,4 +1,4 @@
-import { gameSetup, rotateShips } from "./setup.js";
+import { gameSetup } from "./setup.js";
 
 function createTile(index) {
   const x = Math.floor(index / 10);
@@ -35,29 +35,13 @@ export function formValidation(e) {
   }
 }
 
-// 3. Measures the size of gameboard tiles to set the size of boats
-const gameboard = document.querySelector(".gameboard");
-function syncTileSize() {
-  const tile = gameboard.querySelector(".tile");
-  if (!tile) return;
-  const { width } = tile.getBoundingClientRect();
-  document.documentElement.style.setProperty("--tile-size", `${width}px`);
-}
-new ResizeObserver(syncTileSize).observe(gameboard);
-
 //================= EVENT LSNRS================//
 const modal = document.querySelector("#choose-players");
 const modalForm = modal.querySelector("form");
-const rotateBtn = document.querySelector("#rotate-btn");
-const shipsWrap = document.querySelector(".ships-wrap");
 
 modalForm.addEventListener("change", formValidation);
 modalForm.addEventListener("submit", (e) => {
   let formData = Object.fromEntries(new FormData(e.currentTarget));
   let playerData = gameSetup(formData);
   console.log(playerData);
-});
-
-rotateBtn.addEventListener("click", () => {
-  shipsWrap.classList.toggle("hz", rotateShips() === "hz");
 });
