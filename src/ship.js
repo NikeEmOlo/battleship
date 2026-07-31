@@ -8,7 +8,7 @@ const shipTypes = {
       [0, 3],
       [0, 4],
     ],
-    rotation = "vt",
+    rotation: "vt",
   },
   battleship: {
     size: 4,
@@ -19,8 +19,7 @@ const shipTypes = {
       [3, 6],
       [3, 7],
     ],
-    rotation = "vt"
-  },
+    rotation: "vt",  },
   destroyer: {
     size: 3,
     start: [
@@ -28,8 +27,7 @@ const shipTypes = {
       [1, 7],
       [1, 8],
     ],
-    rotation = "hz"
-  },
+    rotation: "hz",  },
   submarine: {
     size: 3,
     start: [
@@ -37,16 +35,14 @@ const shipTypes = {
       [6, 7],
       [6, 8],
     ],
-    rotation = "hz"
-  },
+    rotation: "hz",  },
   patrol: {
     size: 2,
     start: [
       [1, 7],
       [1, 8],
     ],
-    rotation = "vt"
-  },
+    rotation: "vt",  },
 };
 
 export function createShip(name) {
@@ -76,9 +72,12 @@ export function createShip(name) {
       coords = array;
     },
 
+    get rotation() {
+      return rotation;
+    },
     toggleRotation() {
-      this.rotation = this.rotation === "hz" ? "vt" : "hz";
-      return this.rotation;
-    }
+      rotation = rotation === "hz" ? "vt" : "hz";
+      return rotation;
+    },
   };
 }
