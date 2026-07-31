@@ -75,5 +75,10 @@ export function createShip(name) {
     setCoords(array) {
       coords = array;
     },
+
+    toggleRotation() {
+      this.rotation = this.rotation === "hz" ? "vt" : "hz";
+      return this.rotation;
+    }
   };
 }

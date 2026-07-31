@@ -12,7 +12,7 @@ export function createGameBoard() {
   const fleet = Object.fromEntries(
     fleetConfig.map((ship) => [ship, createShip(ship)]),
   );
-  let direction = "hz";
+
   let shipsPlaced = 0;
 
   //Gameboard management
@@ -32,7 +32,7 @@ export function createGameBoard() {
 
       // Depending on ship size, build up each cell the ship occupies
       for (let i = 0; i < ship.size; i++) {
-        if (direction === "hz") {
+        if (ship.rotation === "hz") {
           coords.push([x, y + i]);
         } else {
           coords.push([x + i, y]);
@@ -48,11 +48,6 @@ export function createGameBoard() {
       }
 
       shipsPlaced >= 5 ? this.toggleReady() : null;
-    },
-
-    toggleRotate() {
-      direction = direction === "hz" ? "vt" : "hz";
-      return direction;
     },
 
     removeShip(shipName) {
