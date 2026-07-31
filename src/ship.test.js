@@ -43,6 +43,25 @@ test("set ship coordinates", () => {
   ]);
 });
 
+test("get a ship's starting rotation", () => {
+  expect(createShip("carrier").rotation).toBe("vt");
+  expect(createShip("destroyer").rotation).toBe("hz");
+});
+
+test("toggle rotation value", () => {
+  const ship = createShip("carrier");
+  expect(ship.toggleRotation()).toBe("hz");
+  expect(ship.toggleRotation()).toBe("vt");
+});
+
+test("rotating one ship leaves the others alone", () => {
+  const carrier = createShip("carrier");
+  const patrol = createShip("patrol");
+  carrier.toggleRotation();
+  expect(carrier.rotation).toBe("hz");
+  expect(patrol.rotation).toBe("vt");
+});
+
 test("Check if ship has been placed", () => {
   const ship = createShip("destroyer");
   const coords = [

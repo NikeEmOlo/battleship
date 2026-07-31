@@ -22,29 +22,26 @@ test("coordinate validation", () => {
 });
 
 test("How many ships are placed?", () => {
-  expect(board.shipsPlaced).toBe(0);
+  expect(board.shipsPlaced).toBe(5);
 });
-
-test("toggle rotate value", () => {
-  expect(board.toggleRotate()).toBe("vt");
-});
-
-test("toggle rotate value", () => {
-  expect(board.toggleRotate()).toBe("hz");
+test("remove a ship from the board", () => {
+  board.removeShip("patrol");
+  expect(board.shipsPlaced).toBe(4);
+  expect(board.fleet.patrol.coords).toEqual([]);
 });
 
 test("Place a ship on the board", () => {
-  board.placeShip([0, 0], "patrol");
-  expect(board.shipsPlaced).toBe(1);
+  board.placeShip([8, 0], "patrol");
+  expect(board.shipsPlaced).toBe(5);
   expect(board.fleet.patrol.coords).toEqual([
-    [0, 0],
-    [0, 1],
+    [8, 0],
+    [9, 0],
   ]);
 });
 
 test("receive an attack on a ship", () => {
-  expect(board.receiveAttack([0, 1])).toBe(false);
-  expect(board.receiveAttack([0, 0])).toBe(true);
+  expect(board.receiveAttack([8, 0])).toBe(false);
+  expect(board.receiveAttack([9, 0])).toBe(true);
 });
 
 test("Have all ships sunk", () => {
@@ -54,10 +51,4 @@ test("Have all ships sunk", () => {
 test("receive a missed attack", () => {
   board.receiveAttack([6, 3]);
   expect(board.missed).toEqual([[6, 3]]);
-});
-
-test("remove a ship from the board", () => {
-  board.removeShip("patrol");
-  expect(board.shipsPlaced).toBe(0);
-  expect(board.fleet.patrol.coords).toEqual([]);
 });

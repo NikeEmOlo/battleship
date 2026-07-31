@@ -6,6 +6,6 @@ test("Create a new player", () => {
 });
 
 test("Create a new player", () => {
-  let player1 = createPlayer("human");
-  expect(player1.name).toBe("Ye who shall not be named");
+  let player1 = createPlayer("human", "Tim");
+  expect(player1.name).toBe("Tim");
 });

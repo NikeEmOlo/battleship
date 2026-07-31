@@ -13,7 +13,7 @@ export function createGameBoard() {
     fleetConfig.map((ship) => [ship, createShip(ship)]),
   );
 
-  let shipsPlaced = 0;
+  let shipsPlaced = 5;
 
   //Gameboard management
   let ready = false;
