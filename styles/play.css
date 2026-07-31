@@ -54,6 +54,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   flex: 1 1 auto;
   min-width: 300px;
   padding: 2rem 0;
@@ -65,6 +66,7 @@ main {
   .ships-wrap {
     display: flex;
     align-items: start;
+    gap: 1rem;
   }
 
   .ship {
@@ -85,6 +87,11 @@ main {
     height: 100%;
     object-fit: contain;
     z-index: 1;
+  }
+
+  #rotate-btn {
+    background: none;
+    border: none;
   }
 }
 
