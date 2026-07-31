@@ -65,12 +65,19 @@ main {
 
   .ships-wrap {
     display: flex;
+    flex-wrap: wrap;
     align-items: start;
+    justify-content: center;
     gap: 1rem;
   }
 
   .ship {
     position: relative;
+    transition: transform 250ms ease;
+  }
+
+  .ships-wrap.hz .ship {
+    transform: rotate(90deg);
   }
 
   .segment {
@@ -92,6 +99,12 @@ main {
   #rotate-btn {
     background: none;
     border: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ship {
+    transition: none;
   }
 }
 
