@@ -1,4 +1,4 @@
-let formData;
+import { gameSetup } from "./setup.js";
 
 function createTile(index) {
   const x = Math.floor(index / 10);
@@ -13,14 +13,14 @@ function createTile(index) {
   return tile;
 }
 
-//Creates a gameboard with 100 tiles
+// 1. Creates a gameboard with 100 tiles
 export function displayBoard(board) {
   for (let i = 0; i < 100; i++) {
     board.appendChild(createTile(i));
   }
 }
 
-// Form validation, ensures max two players at a time
+// 2. Form validation, ensures max two players at a time
 const frienemyRadio = document.querySelector("#frienemy");
 const frienemyName = document.querySelector("#name-2-wrap");
 const frienemyNameInput = document.querySelector("#name-2");
@@ -35,7 +35,7 @@ export function formValidation(e) {
   }
 }
 
-//Measures the size of gameboard tiles to set the size of boats
+// 3. Measures the size of gameboard tiles to set the size of boats
 const gameboard = document.querySelector(".gameboard");
 function syncTileSize() {
   const tile = gameboard.querySelector(".tile");
@@ -51,6 +51,7 @@ const modalForm = modal.querySelector("form");
 
 modalForm.addEventListener("change", formValidation);
 modalForm.addEventListener("submit", (e) => {
-  formData = Object.fromEntries(new FormData(e.currentTarget));
-  console.log(formData);
+  let formData = Object.fromEntries(new FormData(e.currentTarget));
+  let playerData = gameSetup(formData);
+  console.log(playerData);
 });
