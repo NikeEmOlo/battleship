@@ -55,6 +55,15 @@ main {
   min-width: 300px;
 }
 
+main:has(dialog[open]) {
+  background-color: #fff;
+}
+
+main:has(dialog[open]) .gameboard-wrap,
+main:has(dialog[open]) .context {
+  visibility: hidden;
+}
+
 dialog {
   position: absolute;
   inset: 0;
@@ -173,13 +182,6 @@ dialog {
 }
 
 @media (max-width: 600px) {
-  /* ::backdrop never paints for <dialog open>, so the page behind is blurred
-     by filtering the dialog's siblings instead. */
-  main:has(dialog[open]) .gameboard-wrap,
-  main:has(dialog[open]) .context {
-    filter: blur(6px);
-  }
-
   dialog {
     position: fixed;
     inset: 0;
