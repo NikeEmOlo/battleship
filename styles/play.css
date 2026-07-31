@@ -60,7 +60,7 @@ main {
   padding: 2rem 0;
 
   .context-header {
-    width: max(50%, 200px);
+    width: max(40%, 200px);
   }
 
   .ships-wrap {
