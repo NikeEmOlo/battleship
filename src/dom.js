@@ -1,3 +1,5 @@
+let formData;
+
 function createTile(index) {
   const x = Math.floor(index / 10);
   const y = index % 10;
@@ -39,6 +41,6 @@ const modalForm = modal.querySelector("form");
 
 modalForm.addEventListener("change", formValidation);
 modalForm.addEventListener("submit", (e) => {
-  let formData = Object.fromEntries(new FormData(e.currentTarget));
-  gameSetup(formData);
+  formData = Object.fromEntries(new FormData(e.currentTarget));
+  console.log(formData);
 });
