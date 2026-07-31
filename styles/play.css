@@ -51,8 +51,26 @@ main {
 }
 
 .context {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   flex: 1 1 auto;
   min-width: 300px;
+  padding: 2rem 0;
+
+  img {
+    width: max(50%, 200px);
+  }
+
+  .ships-wrap {
+    display: flex;
+  }
+
+  .segment {
+    width: var(--tile-size);
+    height: var(--tile-size);
+    background-color: pink;
+  }
 }
 
 main:has(dialog[open]) {

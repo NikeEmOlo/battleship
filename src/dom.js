@@ -35,6 +35,16 @@ export function formValidation(e) {
   }
 }
 
+//Measures the size of gameboard tiles to set the size of boats
+const gameboard = document.querySelector(".gameboard");
+function syncTileSize() {
+  const tile = gameboard.querySelector(".tile");
+  if (!tile) return;
+  const { width } = tile.getBoundingClientRect();
+  document.documentElement.style.setProperty("--tile-size", `${width}px`);
+}
+new ResizeObserver(syncTileSize).observe(gameboard);
+
 //================= EVENT LSNRS================//
 const modal = document.querySelector("#choose-players");
 const modalForm = modal.querySelector("form");

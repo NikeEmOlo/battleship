@@ -13,7 +13,68 @@
       <div class="gameboard-wrap" id="setup-board">
         <div class="gameboard"></div>
       </div>
-      <div class="context"></div>
+      <div class="context">
+        <img src="/place_your_ships.png" alt="Place your ships" />
+        <div class="ships-wrap">
+          <div
+            class="ship"
+            data-ship="carrier"
+            data-size="5"
+            data-orientation="hz"
+          >
+            <div class="segment" data-segment="0"></div>
+            <div class="segment" data-segment="1"></div>
+            <div class="segment" data-segment="2"></div>
+            <div class="segment" data-segment="3"></div>
+            <div class="segment" data-segment="4"></div>
+            <img src="/carrier.png" alt="" />
+          </div>
+          <div
+            class="ship"
+            data-ship="battleship"
+            data-size="4"
+            data-orientation="hz"
+          >
+            <div class="segment" data-segment="0"></div>
+            <div class="segment" data-segment="1"></div>
+            <div class="segment" data-segment="2"></div>
+            <div class="segment" data-segment="3"></div>
+            <img src="/battleship.png" alt="" />
+          </div>
+          <div
+            class="ship"
+            data-ship="destroyer"
+            data-size="3"
+            data-orientation="hz"
+          >
+            <div class="segment" data-segment="0"></div>
+            <div class="segment" data-segment="1"></div>
+            <div class="segment" data-segment="2"></div>
+            <img src="/destroyer.png" alt="" />
+          </div>
+          <div
+            class="ship"
+            data-ship="submarine"
+            data-size="3"
+            data-orientation="hz"
+          >
+            <div class="segment" data-segment="0"></div>
+            <div class="segment" data-segment="1"></div>
+            <div class="segment" data-segment="2"></div>
+            <img src="/submarine.png" alt="" />
+          </div>
+          <div
+            class="ship"
+            data-ship="patrol"
+            data-size="5"
+            data-orientation="hz"
+          >
+            <div class="segment" data-segment="0"></div>
+            <div class="segment" data-segment="1"></div>
+            <img src="/patrol.png" alt="" />
+          </div>
+        </div>
+      </div>
       <dialog open id="choose-players">
         <form method="dialog">
           <div class="name-wrap">
