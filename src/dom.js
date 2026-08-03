@@ -1,4 +1,4 @@
-import { gameSetup } from "./setup.js";
+import { gameSetup, getPlayers } from "./setup.js";
 
 function createTile(index) {
   const x = Math.floor(index / 10);
@@ -34,6 +34,10 @@ export function formValidation(e) {
       break;
   }
 }
+
+// 3. Display's ship at correct coordinates
+// This function will get the coordinates from a ship.
+// Then it will use those coordinates to place the image of a ship across those coordinates
 
 //================= EVENT LSNRS================//
 const modal = document.querySelector("#choose-players");

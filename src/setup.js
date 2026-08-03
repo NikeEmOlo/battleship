@@ -20,3 +20,7 @@ export function gameSetup(formData) {
 export function rotateShips() {
   return p1.board.toggleRotate();
 }
+
+export function getPlayers() {
+  return players;
+}
