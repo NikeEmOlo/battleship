@@ -101,9 +101,12 @@ function moveHeldShip(e) {
 function rotateHeldShip() {
   // Rotates the held ship, leaving it alone if it would not fit
   let player = getActivePlayer();
-  const start = heldShip.coords[0];
+  const [gx, gy] = heldShip.coords[grabOffset];
 
   heldShip.toggleRotation();
+
+  const start =
+    heldShip.rotation === "hz" ? [gx, gy - grabOffset] : [gx - grabOffset, gy];
 
   if (!player.board.placeShip(start, heldShip.name)) {
     heldShip.toggleRotation();
