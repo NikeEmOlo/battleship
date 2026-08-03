@@ -53,8 +53,6 @@ function displayShip(shipEl, ship) {
   shipEl.style.gridRow = `${Math.min(...xs) + 1} / ${Math.max(...xs) + 2}`;
   shipEl.style.gridColumn = `${Math.min(...ys) + 1} / ${Math.max(...ys) + 2}`;
   shipEl.classList.toggle("hz", ship.rotation === "hz");
-
-  gameBoard.appendChild(shipEl);
 }
 
 // Display's the entire fleet at correct coordinates
@@ -67,7 +65,13 @@ function displayFleet(fleet) {
     shipEl.style.setProperty("--ship-length", ship.size);
 
     displayShip(shipEl, ship);
+    gameBoard.appendChild(shipEl);
   });
+}
+
+// Switches the orientation of a ship
+function displayShipRotation(shipEl) {
+  shipEl.classList.toggle("hz");
 }
 
 //================= EVENT LSNRS================//
@@ -80,3 +84,4 @@ modalForm.addEventListener("submit", (e) => {
   let playerData = gameSetup(formData);
   displayFleet(playerData.player1.board.fleet);
 });
+
