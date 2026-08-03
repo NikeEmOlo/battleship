@@ -13,10 +13,10 @@ const shipTypes = {
   battleship: {
     size: 4,
     start: [
+      [2, 3],
       [3, 3],
       [4, 3],
       [5, 3],
-      [6, 3],
     ],
     rotation: "vt",
   },
