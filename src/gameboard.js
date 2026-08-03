@@ -13,8 +13,6 @@ export function createGameBoard() {
     fleetConfig.map((ship) => [ship, createShip(ship)]),
   );
 
-  let shipsPlaced = 5;
-
   //Gameboard management
   let ready = false;
   let missed = [];
@@ -41,20 +39,16 @@ export function createGameBoard() {
       // If coords are valid, place the ship, otherwise throw an error
       if (this.coordValidation(coords)) {
         ship.setCoords(coords);
-        shipsPlaced++;
         return true;
       } else {
         return false;
       }
-
-      shipsPlaced >= 5 ? this.toggleReady() : null;
     },
 
     removeShip(shipName) {
       const ship = fleet[shipName];
       if (!ship || !ship.placed) return false;
       ship.setCoords([]);
-      shipsPlaced--;
       if (ready) this.toggleReady();
       return true;
     },
@@ -88,7 +82,7 @@ export function createGameBoard() {
     },
 
     get shipsPlaced() {
-      return shipsPlaced;
+      return Object.values(fleet).filter((ship) => ship.placed).length;
     },
 
     get allSunk() {
