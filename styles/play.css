@@ -53,6 +53,7 @@ main {
   width: calc(100% - 4px);
   height: 100%;
   object-fit: contain;
+  transition: transform 150ms ease;
 }
 
 .ship.hz {
