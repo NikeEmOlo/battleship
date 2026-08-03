@@ -3,10 +3,10 @@ const shipTypes = {
     size: 5,
     start: [
       [0, 0],
-      [0, 1],
-      [0, 2],
-      [0, 3],
-      [0, 4],
+      [1, 0],
+      [2, 0],
+      [3, 0],
+      [4, 0],
     ],
     rotation: "vt",
   },
@@ -14,12 +14,12 @@ const shipTypes = {
     size: 4,
     start: [
       [3, 3],
-      [3, 4],
-      [3, 5],
-      [3, 6],
-      [3, 7],
+      [4, 3],
+      [5, 3],
+      [6, 3],
     ],
-    rotation: "vt",  },
+    rotation: "vt",
+  },
   destroyer: {
     size: 3,
     start: [
@@ -27,7 +27,8 @@ const shipTypes = {
       [1, 7],
       [1, 8],
     ],
-    rotation: "hz",  },
+    rotation: "hz",
+  },
   submarine: {
     size: 3,
     start: [
@@ -35,14 +36,16 @@ const shipTypes = {
       [6, 7],
       [6, 8],
     ],
-    rotation: "hz",  },
+    rotation: "hz",
+  },
   patrol: {
     size: 2,
     start: [
-      [1, 7],
-      [1, 8],
+      [3, 8],
+      [4, 8],
     ],
-    rotation: "vt",  },
+    rotation: "vt",
+  },
 };
 
 export function createShip(name) {
