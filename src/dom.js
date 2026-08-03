@@ -44,10 +44,9 @@ export function formValidation(e) {
       break;
   }
 }
+
 // Displays a single ship
 function displayShip(shipEl, coords) {
-  //Take the coordinates of the ship.
-  //Display an image of the ship on the gameboard
   const xs = coords.map(([x]) => x);
   const ys = coords.map(([, y]) => y);
 
@@ -56,12 +55,13 @@ function displayShip(shipEl, coords) {
   gameBoard.appendChild(shipEl);
 }
 
-// 3. Display's the entire fleet at correct coordinates
+// Display's the entire fleet at correct coordinates
 function displayFleet(fleet) {
   Object.values(fleet).forEach((ship) => {
     let shipEl = document.createElement("img");
     shipEl.src = shipImgs[ship.name];
     shipEl.dataset.name = ship.name;
+    shipEl.classList.add("ship");
     displayShip(shipEl, ship.coords);
   });
 }
