@@ -46,12 +46,14 @@ export function formValidation(e) {
 }
 
 // Displays a single ship
-function displayShip(shipEl, coords) {
-  const xs = coords.map(([x]) => x);
-  const ys = coords.map(([, y]) => y);
+function displayShip(shipEl, ship) {
+  const xs = ship.coords.map(([x]) => x);
+  const ys = ship.coords.map(([, y]) => y);
 
   shipEl.style.gridRow = `${Math.min(...xs) + 1} / ${Math.max(...xs) + 2}`;
   shipEl.style.gridColumn = `${Math.min(...ys) + 1} / ${Math.max(...ys) + 2}`;
+  shipEl.classList.toggle("hz", ship.rotation === "hz");
+
   gameBoard.appendChild(shipEl);
 }
 
@@ -62,7 +64,9 @@ function displayFleet(fleet) {
     shipEl.src = shipImgs[ship.name];
     shipEl.dataset.name = ship.name;
     shipEl.classList.add("ship");
-    displayShip(shipEl, ship.coords);
+    shipEl.style.setProperty("--ship-length", ship.size);
+
+    displayShip(shipEl, ship);
   });
 }
 

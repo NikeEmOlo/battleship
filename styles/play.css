@@ -47,9 +47,16 @@ main {
 
 .ship {
   display: block;
-  width: 100%;
+  place-self: center;
+  width: calc(100% - 4px);
   height: 100%;
   object-fit: contain;
+}
+
+.ship.hz {
+  width: calc(100% / var(--ship-length) - 4px);
+  height: calc(100% * var(--ship-length));
+  transform: rotate(90deg);
 }
 
 .tile {
