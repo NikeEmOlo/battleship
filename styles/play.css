@@ -81,8 +81,60 @@ main {
   padding: 2rem 0;
   max-height: 100vh;
 
+  .img-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 20%;
+  }
+
   .context-header {
-    width: max(40%, 200px);
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(1rem, 4vh, 3rem);
+    flex: 1 1 auto;
+    min-height: 0;
+    padding-top: clamp(1rem, 4vh, 4rem);
+  }
+
+  p {
+    font-family: var(--handwriting);
+    font-size: 2rem;
+    line-height: 1.1;
+    flex: 2 2 auto;
+  }
+
+  .tip {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+    gap: 1em;
+    width: 100%;
+  }
+
+  .p-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tip > img {
+    justify-self: center;
+    max-width: 48px;
+    max-height: 48px;
+    height: auto;
+  }
+
+  .tip > p,
+  .tip > .p-col {
+    min-width: 0;
   }
 }
 

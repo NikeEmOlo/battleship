@@ -14,11 +14,36 @@
         <div class="gameboard"></div>
       </div>
       <div class="context">
-        <img
-          class="context-header"
-          src="/place_your_ships.png"
-          alt="Place your ships"
-        />
+        <div class="img-wrap">
+          <img
+            class="context-header"
+            src="/place_your_ships.png"
+            alt="Place your ships"
+          />
+        </div>
+        <div class="controls">
+          <div class="tip">
+            <img src="/mouse_pointer.png" alt="Press R to rotate" />
+            <p>Click to select a ship.</p>
+          </div>
+          <div class="tip">
+            <img src="/rotate_btn.png" alt="Press R to rotate" />
+            <div class="p-col">
+              <p>Press R on your keyboard to rotate a ship.</p>
+              <p>
+                Your ship won't rotate if it is too close to the edge of the
+                board.
+              </p>
+            </div>
+          </div>
+          <div class="tip">
+            <img src="/mouse_pointer.png" alt="Press R to rotate" />
+            <div class="p-col">
+              <p>Move your mouse to where you want to place the ship.</p>
+              <p>Click again to drop the ship</p>
+            </div>
+          </div>
+        </div>
       </div>
       <dialog open id="choose-players">
         <form method="dialog">
