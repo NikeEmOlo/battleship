@@ -39,6 +39,30 @@ test("Place a ship on the board", () => {
   ]);
 });
 
+test("cells occupied by other ships are not free", () => {
+  const board = createGameBoard();
+  const carrier = board.fleet.carrier.coords;
+
+  expect(board.cellsFree(carrier, "patrol")).toBe(false);
+  expect(board.cellsFree([[9, 9]], "patrol")).toBe(true);
+});
+
+test("a ship does not block itself", () => {
+  const board = createGameBoard();
+  const carrier = board.fleet.carrier.coords;
+
+  expect(board.cellsFree(carrier, "carrier")).toBe(true);
+  expect(board.placeShip([0, 0], "carrier")).toBe(true);
+});
+
+test("a ship cannot be placed on top of another ship", () => {
+  const board = createGameBoard();
+  const before = board.fleet.patrol.coords;
+
+  expect(board.placeShip([0, 0], "patrol")).toBe(false);
+  expect(board.fleet.patrol.coords).toEqual(before);
+});
+
 test("receive an attack on a ship", () => {
   expect(board.receiveAttack([8, 0])).toBe(false);
   expect(board.receiveAttack([9, 0])).toBe(true);

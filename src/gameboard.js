@@ -20,15 +20,13 @@ export function createGameBoard() {
   return {
     fleet,
 
-    placeShip(location, shipName) {
-      //Needs to know which ship and which cell is the starting cell
-      // Starting cell and point for rotation
+    shipCoords(location, shipName) {
+      // Which cells a ship would occupy from this starting cell
       const ship = fleet[shipName];
-      if (!ship) return false;
+      if (!ship) return [];
       const [x, y] = location;
       let coords = [];
 
-      // Depending on ship size, build up each cell the ship occupies
       for (let i = 0; i < ship.size; i++) {
         if (ship.rotation === "hz") {
           coords.push([x, y + i]);
@@ -36,8 +34,19 @@ export function createGameBoard() {
           coords.push([x + i, y]);
         }
       }
+      return coords;
+    },
+
+    placeShip(location, shipName) {
+      //Needs to know which ship and which cell is the starting cell
+      // Starting cell and point for rotation
+      const ship = fleet[shipName];
+      if (!ship) return false;
+
+      const coords = this.shipCoords(location, shipName);
+
       // If coords are valid, place the ship, otherwise throw an error
-      if (this.coordValidation(coords)) {
+      if (this.coordValidation(coords) && this.cellsFree(coords, shipName)) {
         ship.setCoords(coords);
         return true;
       } else {
@@ -55,6 +64,17 @@ export function createGameBoard() {
 
     coordValidation(array) {
       return array.every(([x, y]) => x >= 0 && x <= 9 && y >= 0 && y <= 9);
+    },
+
+    cellsFree(array, shipName) {
+      // Every cell held by the rest of the fleet - the ship itself doesn't block
+      const taken = Object.values(fleet)
+        .filter((ship) => ship.name !== shipName)
+        .flatMap((ship) => ship.coords);
+
+      return array.every(
+        ([x, y]) => !taken.some(([tx, ty]) => tx === x && ty === y),
+      );
     },
 
     toggleReady() {

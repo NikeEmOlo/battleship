@@ -66,6 +66,11 @@ main {
   pointer-events: none;
 }
 
+.ship.blocked {
+  outline: 2px solid #e5484d;
+  filter: drop-shadow(0 0 3px #e5484d);
+}
+
 .tile {
   background-color: #f1fafe;
   border: 1px solid #3cc3d8;

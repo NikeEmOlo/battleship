@@ -5,6 +5,8 @@ let p1;
 let p2;
 let active = "p1";
 let heldShip = null;
+let heldCoords = null;
+let blocked = false;
 let grabOffset = 0;
 
 const shipImgs = {
@@ -42,14 +44,14 @@ export function displayBoard(board) {
 
 //-------------------- Displays Ships--------------------//
 
-function displayShip(shipEl, ship) {
-  // displays a single ship
-  const xs = ship.coords.map(([x]) => x);
-  const ys = ship.coords.map(([, y]) => y);
+function displayShip(shipEl, coords, rotation) {
+  // displays a single ship, placed or not
+  const xs = coords.map(([x]) => x);
+  const ys = coords.map(([, y]) => y);
 
   shipEl.style.gridRow = `${Math.min(...xs) + 1} / ${Math.max(...xs) + 2}`;
   shipEl.style.gridColumn = `${Math.min(...ys) + 1} / ${Math.max(...ys) + 2}`;
-  shipEl.classList.toggle("hz", ship.rotation === "hz");
+  shipEl.classList.toggle("hz", rotation === "hz");
 }
 
 function displayFleet(player, board) {
@@ -62,7 +64,7 @@ function displayFleet(player, board) {
     shipEl.classList.add("ship");
     shipEl.style.setProperty("--ship-length", ship.size);
 
-    displayShip(shipEl, ship);
+    displayShip(shipEl, ship.coords, ship.rotation);
     board.appendChild(shipEl);
   });
 }
@@ -81,6 +83,22 @@ function moveShip(shipEl, e) {
   const [gx, gy] = [+tile.dataset.x, +tile.dataset.y];
   const [sx, sy] = heldShip.coords[0];
   grabOffset = heldShip.rotation === "hz" ? gy - sy : gx - sx;
+
+  heldCoords = heldShip.coords;
+  blocked = false;
+}
+
+function showHeldShip(coords) {
+  // Draws the held ship at coords, only committing it if the cells are free
+  let player = getActivePlayer();
+  heldCoords = coords;
+  blocked = !player.board.cellsFree(coords, heldShip.name);
+
+  if (!blocked) player.board.placeShip(coords[0], heldShip.name);
+
+  const shipEl = shipElement(heldShip.name);
+  shipEl.classList.toggle("blocked", blocked);
+  displayShip(shipEl, coords, heldShip.rotation);
 }
 
 function moveHeldShip(e) {
@@ -92,34 +110,37 @@ function moveHeldShip(e) {
   const [hx, hy] = [+tile.dataset.x, +tile.dataset.y];
   const start =
     heldShip.rotation === "hz" ? [hx, hy - grabOffset] : [hx - grabOffset, hy];
+  const coords = player.board.shipCoords(start, heldShip.name);
 
-  if (player.board.placeShip(start, heldShip.name)) {
-    displayShip(shipElement(heldShip.name), heldShip);
-  }
+  if (player.board.coordValidation(coords)) showHeldShip(coords);
 }
 
 function rotateHeldShip() {
   // Rotates the held ship, leaving it alone if it would not fit
   let player = getActivePlayer();
-  const [gx, gy] = heldShip.coords[grabOffset];
+  const [gx, gy] = heldCoords[grabOffset];
 
   heldShip.toggleRotation();
 
   const start =
     heldShip.rotation === "hz" ? [gx, gy - grabOffset] : [gx - grabOffset, gy];
+  const coords = player.board.shipCoords(start, heldShip.name);
 
-  if (!player.board.placeShip(start, heldShip.name)) {
+  if (!player.board.coordValidation(coords)) {
     heldShip.toggleRotation();
     return;
   }
 
-  displayShip(shipElement(heldShip.name), heldShip);
+  showHeldShip(coords);
 }
 
 function dropShip() {
-  // Puts a held ship back down
+  // Puts a held ship back down, refusing to drop it onto another ship
+  if (blocked) return;
+
   shipElement(heldShip.name).classList.remove("held");
   heldShip = null;
+  heldCoords = null;
 }
 
 // Form validation, ensures max two players at a time
