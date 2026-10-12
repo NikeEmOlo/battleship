@@ -8,6 +8,7 @@ let heldShip = null;
 let heldCoords = null;
 let blocked = false;
 let grabOffset = 0;
+let turnTaken = false;
 
 const shipImgs = {
   carrier: "/carrier.png",
@@ -18,6 +19,11 @@ const shipImgs = {
 };
 
 const setupBoard = document.querySelector(".gameboard");
+const attackBoard = document.querySelector("#attack-board .gameboard");
+const sidebar = document.querySelector(".sidebar");
+const statusEl = sidebar.querySelector(".status");
+const endTurnBtn = sidebar.querySelector(".end-turn");
+const passDialog = document.querySelector("#pass-device");
 
 //============================================FUNCTIONS================//
 
@@ -143,6 +149,64 @@ function dropShip() {
   heldCoords = null;
 }
 
+//-------------------- Battle --------------------//
+
+function displayShots(owner, board) {
+  // Marks every attack that has been made against the owner's fleet
+  board
+    .querySelectorAll(".tile")
+    .forEach((tile) => tile.classList.remove("hit", "miss"));
+
+  owner.board.hits.forEach((coord) =>
+    tileOn(board, coord).classList.add("hit"),
+  );
+  owner.board.missed.forEach((coord) =>
+    tileOn(board, coord).classList.add("miss"),
+  );
+}
+
+function passDevice() {
+  // Hides the boards until the next player has the computer
+  passDialog.querySelector("p").textContent =
+    `Pass the computer to ${getActivePlayer().name}`;
+  passDialog.show();
+}
+
+function startTurn() {
+  turnTaken = false;
+  endTurnBtn.hidden = true;
+  statusEl.textContent = `${getActivePlayer().name}, pick a square to attack`;
+  displayShots(getOpponent(), attackBoard);
+}
+
+function attack(tile) {
+  const opponent = getOpponent();
+  const coord = [+tile.dataset.x, +tile.dataset.y];
+  if (turnTaken || opponent.board.attacked(coord)) return;
+
+  const sunk = opponent.board.receiveAttack(coord);
+  turnTaken = true;
+
+  displayShots(opponent, attackBoard);
+  statusEl.textContent = sunk === undefined ? "Miss!" : "Hit!";
+  endTurnBtn.hidden = false;
+}
+
+function endTurn() {
+  toggleActive();
+  passDevice();
+}
+
+function startGame() {
+  document.querySelector("#setup-board").hidden = true;
+  document.querySelector(".context").hidden = true;
+  attackBoard.parentElement.hidden = false;
+  sidebar.hidden = false;
+
+  active = "p1";
+  passDevice();
+}
+
 // Form validation, ensures max two players at a time
 const frienemyRadio = document.querySelector("#frienemy");
 const frienemyName = document.querySelector("#name-2-wrap");
@@ -165,6 +229,14 @@ function toggleActive() {
 
 function getActivePlayer() {
   return active === "p1" ? p1 : p2;
+}
+
+function getOpponent() {
+  return active === "p1" ? p2 : p1;
+}
+
+function tileOn(board, [x, y]) {
+  return board.querySelector(`[data-index="${x * 10 + y}"]`);
 }
 
 function shipElement(name) {
@@ -197,8 +269,6 @@ function gameBoardHandler(e) {
     moveShip(e.target, e);
   }
 }
-
-function startGame() {}
 
 function nextHandler() {
   if (heldShip) return;
@@ -236,3 +306,11 @@ document.addEventListener("keydown", (e) => {
 });
 
 continueBtn.addEventListener("click", nextHandler);
+
+attackBoard.addEventListener("click", (e) => {
+  const tile = e.target.closest(".tile");
+  if (tile) attack(tile);
+});
+
+endTurnBtn.addEventListener("click", endTurn);
+passDialog.addEventListener("close", startTurn);

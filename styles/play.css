@@ -14,6 +14,10 @@
   --biro-red: #c4342b;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 main {
   position: relative;
   display: flex;
@@ -150,6 +154,65 @@ main {
   padding-top: 1rem;
 }
 
+/* -----------------------------------------------BATTLE----------------------------------- */
+
+#attack-board {
+  flex: 1 1 auto;
+  width: auto;
+
+  .gameboard {
+    width: min(100%, 100vh - 64px);
+  }
+
+  .tile {
+    cursor: crosshair;
+  }
+}
+
+.tile.hit,
+.tile.miss {
+  position: relative;
+  z-index: 1;
+  background: transparent center / 100% no-repeat;
+  cursor: default;
+}
+
+.tile.hit {
+  background-image: url("/explosion.png");
+  background-size: 140%;
+}
+
+.tile.miss {
+  background-image: url("/wave.png");
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 3vh, 2rem);
+  flex: 0 0 30vw;
+  height: 100vh;
+  padding: 32px 32px 32px 0;
+  color: var(--biro-blue);
+  font-family: var(--handwriting);
+}
+
+.status {
+  font-size: clamp(1.25rem, 2.4vw, 2.25rem);
+  font-weight: bold;
+  line-height: 1.1;
+}
+
+.end-turn {
+  width: 10vw;
+  min-width: 80px;
+  margin-top: auto;
+  margin-left: auto;
+  padding: 0;
+  background: none;
+  border: none;
+}
+
 /* -----------------------------------------------DIALOGUE----------------------------------- */
 
 main:has(dialog[open]) {
@@ -157,7 +220,8 @@ main:has(dialog[open]) {
 }
 
 main:has(dialog[open]) .gameboard-wrap,
-main:has(dialog[open]) .context {
+main:has(dialog[open]) .context,
+main:has(dialog[open]) .sidebar {
   visibility: hidden;
 }
 
@@ -224,6 +288,14 @@ dialog {
     border: none;
   }
 
+  p {
+    font-family: var(--handwriting);
+    font-size: 2em;
+    font-weight: bold;
+    line-height: 1.1;
+    text-align: center;
+  }
+
   .opponents {
     display: grid;
     grid-template-columns: auto 1fr;
@@ -277,6 +349,16 @@ dialog {
 
   .context {
     min-width: 0;
+  }
+
+  #attack-board .gameboard {
+    width: 100%;
+  }
+
+  .sidebar {
+    flex-basis: auto;
+    height: auto;
+    padding: 0 32px 32px;
   }
 }
 

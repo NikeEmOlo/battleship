@@ -46,6 +46,21 @@
         </div>
         <button class="continue"><img src="/next_button.png" alt="" /></button>
       </div>
+      <div class="gameboard-wrap" id="attack-board" hidden>
+        <div class="gameboard"></div>
+      </div>
+      <aside class="sidebar" hidden>
+        <p class="status"></p>
+        <button class="end-turn" hidden>
+          <img src="/next_button.png" alt="End turn" />
+        </button>
+      </aside>
+      <dialog id="pass-device">
+        <form method="dialog">
+          <p></p>
+          <button type="submit"><img src="/next_button.png" alt="Ready" /></button>
+        </form>
+      </dialog>
       <dialog open id="choose-players">
         <form method="dialog">
           <div class="name-wrap">
