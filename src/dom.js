@@ -21,6 +21,8 @@ const shipImgs = {
 const setupBoard = document.querySelector(".gameboard");
 const attackBoard = document.querySelector("#attack-board .gameboard");
 const sidebar = document.querySelector(".sidebar");
+const miniMap = sidebar.querySelector(".mini-map .gameboard");
+const scores = sidebar.querySelector(".scores");
 const statusEl = sidebar.querySelector(".status");
 const endTurnBtn = sidebar.querySelector(".end-turn");
 const passDialog = document.querySelector("#pass-device");
@@ -179,6 +181,28 @@ function displayAttackBoard() {
   displayFleet(opponent, attackBoard, opponent.board.sunk);
 }
 
+function displayMiniMap() {
+  // The active player's own fleet and the damage it has taken
+  const player = getActivePlayer();
+  clearFleet(miniMap);
+  displayShots(player, miniMap);
+  displayFleet(player, miniMap);
+}
+
+function displayScores() {
+  // A player's score is the damage done to the other player's fleet
+  [
+    ["p1", p1, p2],
+    ["p2", p2, p1],
+  ].forEach(([key, player, opponent]) => {
+    const row = scores.querySelector(`[data-player="${key}"]`);
+    row.classList.toggle("active", key === active);
+    row.querySelector("th").textContent = player.name;
+    row.querySelector(".hits").textContent = opponent.board.hits.length;
+    row.querySelector(".sunk").textContent = opponent.board.sunk.length;
+  });
+}
+
 function passDevice() {
   // Hides the boards until the next player has the computer
   passDialog.querySelector("p").textContent =
@@ -191,6 +215,8 @@ function startTurn() {
   endTurnBtn.hidden = true;
   statusEl.textContent = `${getActivePlayer().name}, pick a square to attack`;
   displayAttackBoard();
+  displayMiniMap();
+  displayScores();
 }
 
 function attack(tile) {
@@ -202,6 +228,7 @@ function attack(tile) {
   turnTaken = true;
 
   displayAttackBoard();
+  displayScores();
   if (sunk) {
     statusEl.textContent = `You sank ${opponent.name}'s ${shipAt(opponent, coord).name}!`;
   } else {

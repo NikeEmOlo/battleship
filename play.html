@@ -50,6 +50,31 @@
         <div class="gameboard"></div>
       </div>
       <aside class="sidebar" hidden>
+        <table class="scores">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Hits</th>
+              <th>Sunk</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-player="p1">
+              <th></th>
+              <td class="hits"></td>
+              <td class="sunk"></td>
+            </tr>
+            <tr data-player="p2">
+              <th></th>
+              <td class="hits"></td>
+              <td class="sunk"></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="mini-map">
+          <p>Your fleet</p>
+          <div class="gameboard"></div>
+        </div>
         <p class="status"></p>
         <button class="end-turn" hidden>
           <img src="/next_button.png" alt="End turn" />

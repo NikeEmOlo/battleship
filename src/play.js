@@ -14,3 +14,4 @@ export const gameState = {
 
 displayBoard(setupBoard);
 displayBoard(document.querySelector("#attack-board .gameboard"));
+displayBoard(document.querySelector(".mini-map .gameboard"));
