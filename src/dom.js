@@ -60,10 +60,13 @@ function displayShip(shipEl, coords, rotation) {
   shipEl.classList.toggle("hz", rotation === "hz");
 }
 
-function displayFleet(player, board) {
-  // displays all ships
-  const fleet = player.board.fleet;
-  Object.values(fleet).forEach((ship) => {
+function displayFleet(
+  player,
+  board,
+  ships = Object.values(player.board.fleet),
+) {
+  // displays all ships, or only the ones passed in
+  ships.forEach((ship) => {
     let shipEl = document.createElement("img");
     shipEl.src = shipImgs[ship.name];
     shipEl.dataset.name = ship.name;
@@ -155,7 +158,7 @@ function displayShots(owner, board) {
   // Marks every attack that has been made against the owner's fleet
   board
     .querySelectorAll(".tile")
-    .forEach((tile) => tile.classList.remove("hit", "miss"));
+    .forEach((tile) => tile.classList.remove("hit", "miss", "sunk"));
 
   owner.board.hits.forEach((coord) =>
     tileOn(board, coord).classList.add("hit"),
@@ -163,6 +166,17 @@ function displayShots(owner, board) {
   owner.board.missed.forEach((coord) =>
     tileOn(board, coord).classList.add("miss"),
   );
+  owner.board.sunk
+    .flatMap((ship) => ship.coords)
+    .forEach((coord) => tileOn(board, coord).classList.add("sunk"));
+}
+
+function displayAttackBoard() {
+  // The opponent's waters: only their sunk ships are revealed
+  const opponent = getOpponent();
+  clearFleet(attackBoard);
+  displayShots(opponent, attackBoard);
+  displayFleet(opponent, attackBoard, opponent.board.sunk);
 }
 
 function passDevice() {
@@ -176,7 +190,7 @@ function startTurn() {
   turnTaken = false;
   endTurnBtn.hidden = true;
   statusEl.textContent = `${getActivePlayer().name}, pick a square to attack`;
-  displayShots(getOpponent(), attackBoard);
+  displayAttackBoard();
 }
 
 function attack(tile) {
@@ -187,8 +201,12 @@ function attack(tile) {
   const sunk = opponent.board.receiveAttack(coord);
   turnTaken = true;
 
-  displayShots(opponent, attackBoard);
-  statusEl.textContent = sunk === undefined ? "Miss!" : "Hit!";
+  displayAttackBoard();
+  if (sunk) {
+    statusEl.textContent = `You sank ${opponent.name}'s ${shipAt(opponent, coord).name}!`;
+  } else {
+    statusEl.textContent = sunk === undefined ? "Miss!" : "Hit!";
+  }
   endTurnBtn.hidden = false;
 }
 
@@ -239,6 +257,16 @@ function tileOn(board, [x, y]) {
   return board.querySelector(`[data-index="${x * 10 + y}"]`);
 }
 
+function shipAt(player, [x, y]) {
+  return Object.values(player.board.fleet).find((ship) =>
+    ship.coords.some(([sx, sy]) => sx === x && sy === y),
+  );
+}
+
+function clearFleet(board) {
+  board.querySelectorAll(".ship").forEach((ship) => ship.remove());
+}
+
 function shipElement(name) {
   return setupBoard.querySelector(`[data-name="${name}"]`);
 }
@@ -274,7 +302,7 @@ function nextHandler() {
   if (heldShip) return;
 
   if (gameState.mode === "twoPlayer" && active === "p1") {
-    document.querySelectorAll(".ship").forEach((ship) => ship.remove());
+    clearFleet(setupBoard);
     toggleActive();
     displayFleet(p2, setupBoard);
     continueBtn.querySelector("img").src = "/play_button.png";

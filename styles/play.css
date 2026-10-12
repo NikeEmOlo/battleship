@@ -170,7 +170,8 @@ main {
 }
 
 .tile.hit,
-.tile.miss {
+.tile.miss,
+.tile.sunk {
   position: relative;
   z-index: 1;
   background: transparent center / 100% no-repeat;
@@ -184,6 +185,16 @@ main {
 
 .tile.miss {
   background-image: url("/wave.png");
+}
+
+.tile.sunk {
+  background-image: url("/pirate_flag.png");
+  background-size: 120%;
+}
+
+#attack-board .ship {
+  pointer-events: none;
+  opacity: 0.6;
 }
 
 .sidebar {
