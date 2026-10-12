@@ -100,15 +100,18 @@ test("sunk ships are listed", () => {
   expect(board.sunk.map((ship) => ship.name)).toEqual(["patrol"]);
 });
 
-test("a fleet can be placed at random", () => {
+test("a fleet placed at random stays on the grid without overlapping", () => {
   const board = createGameBoard();
-  board.placeRandomly();
 
-  const cells = Object.values(board.fleet).flatMap((ship) => ship.coords);
-  const unique = new Set(cells.map(([x, y]) => `${x},${y}`));
+  for (let i = 0; i < 200; i++) {
+    board.placeRandomly();
 
-  expect(board.shipsPlaced).toBe(5);
-  expect(cells.length).toBe(17);
-  expect(unique.size).toBe(17);
-  expect(board.coordValidation(cells)).toBe(true);
+    const cells = Object.values(board.fleet).flatMap((ship) => ship.coords);
+    const unique = new Set(cells.map(([x, y]) => `${x},${y}`));
+
+    expect(board.shipsPlaced).toBe(5);
+    expect(cells.length).toBe(17);
+    expect(unique.size).toBe(17);
+    expect(board.coordValidation(cells)).toBe(true);
+  }
 });
