@@ -26,6 +26,7 @@ const scores = sidebar.querySelector(".scores");
 const statusEl = sidebar.querySelector(".status");
 const endTurnBtn = sidebar.querySelector(".end-turn");
 const passDialog = document.querySelector("#pass-device");
+const gameOverDialog = document.querySelector("#game-over");
 
 //============================================FUNCTIONS================//
 
@@ -238,8 +239,21 @@ function attack(tile) {
 }
 
 function endTurn() {
-  toggleActive();
-  passDevice();
+  if (getOpponent().board.allSunk) {
+    gameOver();
+  } else {
+    toggleActive();
+    passDevice();
+  }
+}
+
+function gameOver() {
+  // Whoever has no ships left is the loser
+  const winner = getActivePlayer();
+  const loser = getOpponent();
+  gameOverDialog.querySelector("p").textContent =
+    `${winner.name} wins! All of ${loser.name}'s ships are sunk.`;
+  gameOverDialog.show();
 }
 
 function startGame() {
@@ -369,3 +383,4 @@ attackBoard.addEventListener("click", (e) => {
 
 endTurnBtn.addEventListener("click", endTurn);
 passDialog.addEventListener("close", startTurn);
+gameOverDialog.addEventListener("close", () => location.reload());
