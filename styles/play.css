@@ -85,6 +85,7 @@ main {
   min-width: 300px;
   padding: 2rem 0;
   max-height: 100vh;
+  container-type: inline-size;
 
   .img-wrap {
     display: flex;
@@ -94,10 +95,7 @@ main {
   }
 
   .context-header {
-    width: auto;
-    height: 100%;
-    max-width: 100%;
-    object-fit: contain;
+    max-width: 80%;
   }
 
   .controls {
@@ -112,7 +110,7 @@ main {
 
   p {
     font-family: var(--handwriting);
-    font-size: 2rem;
+    font-size: clamp(1.1rem, 6.5cqi, 2rem);
     line-height: 1.1;
     flex: 2 2 auto;
   }
@@ -121,7 +119,6 @@ main {
     display: grid;
     grid-template-columns: 1fr 2fr;
     align-items: center;
-    gap: 1em;
     width: 100%;
   }
 
@@ -132,8 +129,8 @@ main {
 
   .tip > img {
     justify-self: center;
-    max-width: 48px;
-    max-height: 48px;
+    max-width: 60px;
+    max-height: 60px;
     height: auto;
   }
 
@@ -142,6 +139,18 @@ main {
     min-width: 0;
   }
 }
+
+.continue {
+  background: none;
+  border: none;
+  width: 10vw;
+  min-width: 80px;
+  margin-left: auto;
+  margin-right: 2rem;
+  padding-top: 1rem;
+}
+
+/* -----------------------------------------------DIALOGUE----------------------------------- */
 
 main:has(dialog[open]) {
   background-color: #fff;
@@ -250,6 +259,8 @@ dialog {
     box-shadow: 4px 6px 10px 0px rgba(0, 0, 0, 0.44);
   }
 }
+
+/* =============================MEDIA QUERIES========================== */
 
 @media (max-width: 900px) {
   main {

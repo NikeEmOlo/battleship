@@ -198,9 +198,25 @@ function gameBoardHandler(e) {
   }
 }
 
+function startGame() {}
+
+function nextHandler() {
+  if (heldShip) return;
+
+  if (gameState.mode === "twoPlayer" && active === "p1") {
+    document.querySelectorAll(".ship").forEach((ship) => ship.remove());
+    toggleActive();
+    displayFleet(p2, setupBoard);
+    continueBtn.querySelector("img").src = "/play_button.png";
+  } else {
+    startGame();
+  }
+}
+
 //================= EVENT LSNRS================//
 const modal = document.querySelector("#choose-players");
 const modalForm = modal.querySelector("form");
+const continueBtn = document.querySelector(".continue");
 
 modalForm.addEventListener("change", formValidation);
 modalForm.addEventListener("submit", (e) => {
@@ -218,3 +234,5 @@ setupBoard.addEventListener("mousemove", (e) => {
 document.addEventListener("keydown", (e) => {
   if (heldShip && e.key === "r") rotateHeldShip();
 });
+
+continueBtn.addEventListener("click", nextHandler);
