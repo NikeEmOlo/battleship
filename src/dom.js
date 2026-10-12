@@ -1,5 +1,6 @@
 import { gameSetup } from "./setup.js";
 import { gameState } from "./play.js";
+import { chooseAttack } from "./computer.js";
 
 let p1;
 let p2;
@@ -25,6 +26,7 @@ const miniMap = sidebar.querySelector(".mini-map .gameboard");
 const scores = sidebar.querySelector(".scores");
 const statusEl = sidebar.querySelector(".status");
 const endTurnBtn = sidebar.querySelector(".end-turn");
+const turnPopup = document.querySelector(".turn-popup");
 const passDialog = document.querySelector("#pass-device");
 const gameOverDialog = document.querySelector("#game-over");
 
@@ -235,11 +237,46 @@ function attack(tile) {
   } else {
     statusEl.textContent = sunk === undefined ? "Miss!" : "Hit!";
   }
-  endTurnBtn.hidden = false;
+
+  if (gameState.mode === "computer" && !opponent.board.allSunk) {
+    computerTurn();
+  } else {
+    endTurnBtn.hidden = false;
+  }
+}
+
+async function computerTurn() {
+  // The computer attacks p1's fleet on the mini-map, no screen change needed
+  await wait(900);
+  turnPopup.hidden = false;
+  await wait(900);
+
+  const coord = chooseAttack(p1.board);
+  const tile = tileOn(miniMap, coord);
+  tile.classList.add("target");
+  await wait(900);
+  tile.classList.remove("target");
+
+  const sunk = p1.board.receiveAttack(coord);
+  displayMiniMap();
+  displayScores();
+  turnPopup.hidden = true;
+
+  let result = "missed.";
+  if (sunk) result = `sank your ${shipAt(p1, coord).name}!`;
+  else if (sunk === false) result = "hit your ship!";
+
+  if (p1.board.allSunk) {
+    statusEl.textContent = `${p2.name} ${result}`;
+    endTurnBtn.hidden = false;
+  } else {
+    statusEl.textContent = `${p2.name} ${result} Your turn.`;
+    turnTaken = false;
+  }
 }
 
 function endTurn() {
-  if (getOpponent().board.allSunk) {
+  if (p1.board.allSunk || p2.board.allSunk) {
     gameOver();
   } else {
     toggleActive();
@@ -249,8 +286,7 @@ function endTurn() {
 
 function gameOver() {
   // Whoever has no ships left is the loser
-  const winner = getActivePlayer();
-  const loser = getOpponent();
+  const [winner, loser] = p2.board.allSunk ? [p1, p2] : [p2, p1];
   gameOverDialog.querySelector("p").textContent =
     `${winner.name} wins! All of ${loser.name}'s ships are sunk.`;
   gameOverDialog.show();
@@ -263,7 +299,12 @@ function startGame() {
   sidebar.hidden = false;
 
   active = "p1";
-  passDevice();
+  if (gameState.mode === "computer") {
+    p2.board.placeRandomly();
+    startTurn();
+  } else {
+    passDevice();
+  }
 }
 
 // Form validation, ensures max two players at a time
@@ -296,6 +337,10 @@ function getOpponent() {
 
 function tileOn(board, [x, y]) {
   return board.querySelector(`[data-index="${x * 10 + y}"]`);
+}
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function shipAt(player, [x, y]) {

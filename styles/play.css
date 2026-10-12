@@ -157,6 +157,7 @@ main {
 /* -----------------------------------------------BATTLE----------------------------------- */
 
 #attack-board {
+  position: relative;
   flex: 1 1 auto;
   width: auto;
 
@@ -176,6 +177,29 @@ main {
   z-index: 1;
   background: transparent center / 100% no-repeat;
   cursor: default;
+}
+
+.tile.target {
+  position: relative;
+  z-index: 1;
+  background: var(--biro-red);
+}
+
+.turn-popup {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  padding: 0.3em 1em;
+  background: center / cover no-repeat url("/yellow_card_label.png");
+  box-shadow: 4px 6px 10px 0px rgba(0, 0, 0, 0.44);
+  color: var(--biro-red);
+  font-family: var(--handwriting);
+  font-size: clamp(1.5rem, 4vw, 3.5rem);
+  font-weight: bold;
+  transform: rotate(-3deg);
 }
 
 .tile.hit {
