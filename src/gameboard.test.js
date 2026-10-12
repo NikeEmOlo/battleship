@@ -76,3 +76,26 @@ test("receive a missed attack", () => {
   board.receiveAttack([6, 3]);
   expect(board.missed).toEqual([[6, 3]]);
 });
+
+test("hits are recorded", () => {
+  expect(board.hits).toEqual([
+    [8, 0],
+    [9, 0],
+  ]);
+});
+
+test("a cell cannot be attacked twice", () => {
+  expect(board.attacked([8, 0])).toBe(true);
+  expect(board.attacked([6, 3])).toBe(true);
+  expect(board.attacked([9, 9])).toBe(false);
+
+  expect(board.receiveAttack([8, 0])).toBe(null);
+  expect(board.receiveAttack([6, 3])).toBe(null);
+  expect(board.hits.length).toBe(2);
+  expect(board.missed.length).toBe(1);
+  expect(board.fleet.patrol.hits).toBe(2);
+});
+
+test("sunk ships are listed", () => {
+  expect(board.sunk.map((ship) => ship.name)).toEqual(["patrol"]);
+});
