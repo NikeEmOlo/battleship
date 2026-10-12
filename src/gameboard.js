@@ -55,6 +55,24 @@ export function createGameBoard() {
       }
     },
 
+    placeRandomly() {
+      // Clears the board, then drops each ship somewhere it fits
+      const ships = Object.values(fleet);
+      ships.forEach((ship) => ship.setCoords([]));
+
+      ships.forEach((ship) => {
+        let placed = false;
+        while (!placed) {
+          if (Math.random() < 0.5) ship.toggleRotation();
+          const start = [
+            Math.floor(Math.random() * 10),
+            Math.floor(Math.random() * 10),
+          ];
+          placed = this.placeShip(start, ship.name);
+        }
+      });
+    },
+
     removeShip(shipName) {
       const ship = fleet[shipName];
       if (!ship || !ship.placed) return false;

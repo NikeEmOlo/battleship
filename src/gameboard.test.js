@@ -99,3 +99,16 @@ test("a cell cannot be attacked twice", () => {
 test("sunk ships are listed", () => {
   expect(board.sunk.map((ship) => ship.name)).toEqual(["patrol"]);
 });
+
+test("a fleet can be placed at random", () => {
+  const board = createGameBoard();
+  board.placeRandomly();
+
+  const cells = Object.values(board.fleet).flatMap((ship) => ship.coords);
+  const unique = new Set(cells.map(([x, y]) => `${x},${y}`));
+
+  expect(board.shipsPlaced).toBe(5);
+  expect(cells.length).toBe(17);
+  expect(unique.size).toBe(17);
+  expect(board.coordValidation(cells)).toBe(true);
+});
