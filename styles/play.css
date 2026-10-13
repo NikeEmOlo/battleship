@@ -364,6 +364,35 @@ main {
   border: none;
 }
 
+.continue,
+.end-turn,
+dialog button {
+  cursor: pointer;
+  transition: transform 150ms ease;
+}
+
+.continue:hover,
+.end-turn:hover,
+dialog button:hover {
+  transform: scale(1.06) rotate(-2deg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .end-turn {
+    animation: nudge 1.4s ease-in-out infinite;
+  }
+
+  .turn-popup {
+    animation: stamp 300ms cubic-bezier(0.2, 1.4, 0.4, 1) both;
+  }
+}
+
+@keyframes nudge {
+  50% {
+    transform: scale(1.08);
+  }
+}
+
 /* -----------------------------------------------WINNER----------------------------------- */
 
 #winner {
@@ -464,7 +493,7 @@ main {
 @keyframes stamp {
   from {
     opacity: 0;
-    transform: rotate(-12deg) scale(2.2);
+    transform: rotate(-12deg) scale(1.8);
   }
 }
 
