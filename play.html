@@ -47,6 +47,10 @@
         <button class="continue"><img src="/next_button.png" alt="" /></button>
       </div>
       <div class="gameboard-wrap" id="attack-board" hidden>
+        <header class="turn-banner">
+          <p class="turn"></p>
+          <p class="status" aria-live="polite"></p>
+        </header>
         <div class="gameboard"></div>
         <p class="turn-popup" hidden>Computer's turn</p>
       </div>
@@ -76,7 +80,6 @@
           <p>Your fleet</p>
           <div class="gameboard"></div>
         </div>
-        <p class="status"></p>
         <button class="end-turn" hidden>
           <img src="/next_button.png" alt="End turn" />
         </button>

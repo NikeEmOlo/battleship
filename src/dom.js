@@ -24,7 +24,8 @@ const attackBoard = document.querySelector("#attack-board .gameboard");
 const sidebar = document.querySelector(".sidebar");
 const miniMap = sidebar.querySelector(".mini-map .gameboard");
 const scores = sidebar.querySelector(".scores");
-const statusEl = sidebar.querySelector(".status");
+const turnEl = document.querySelector(".turn");
+const statusEl = document.querySelector(".status");
 const endTurnBtn = sidebar.querySelector(".end-turn");
 const turnPopup = document.querySelector(".turn-popup");
 const passDialog = document.querySelector("#pass-device");
@@ -199,11 +200,31 @@ function displayScores() {
     ["p2", p2, p1],
   ].forEach(([key, player, opponent]) => {
     const row = scores.querySelector(`[data-player="${key}"]`);
-    row.classList.toggle("active", key === active);
     row.querySelector("th").textContent = player.name;
     row.querySelector(".hits").textContent = opponent.board.hits.length;
     row.querySelector(".sunk").textContent = opponent.board.sunk.length;
   });
+}
+
+function displayTurn(key = active) {
+  // Whose go it is, on the banner and the scoreboard
+  const computer = gameState.mode === "computer";
+  const name = key === "p1" ? p1.name : p2.name;
+
+  if (computer) {
+    turnEl.textContent = key === "p1" ? "Your turn" : "Computer's turn";
+  } else {
+    const nameEl = document.createElement("span");
+    nameEl.textContent = name;
+    turnEl.replaceChildren(nameEl, "'s turn");
+  }
+  turnEl.dataset.player = key;
+
+  scores
+    .querySelectorAll("tbody tr")
+    .forEach((row) =>
+      row.classList.toggle("active", row.dataset.player === key),
+    );
 }
 
 function passDevice() {
@@ -216,7 +237,8 @@ function passDevice() {
 function startTurn() {
   turnTaken = false;
   endTurnBtn.hidden = true;
-  statusEl.textContent = `${getActivePlayer().name}, pick a square to attack`;
+  statusEl.textContent = "Pick a square to attack";
+  displayTurn();
   displayAttackBoard();
   displayMiniMap();
   displayScores();
@@ -248,6 +270,8 @@ function attack(tile) {
 async function computerTurn() {
   // The computer attacks p1's fleet on the mini-map, no screen change needed
   await wait(900);
+  displayTurn("p2");
+  statusEl.textContent = "";
   turnPopup.hidden = false;
   await wait(900);
 
@@ -266,11 +290,11 @@ async function computerTurn() {
   if (sunk) result = `sank your ${shipAt(p1, coord).name}!`;
   else if (sunk === false) result = "hit your ship!";
 
+  statusEl.textContent = `${p2.name} ${result}`;
   if (p1.board.allSunk) {
-    statusEl.textContent = `${p2.name} ${result}`;
     endTurnBtn.hidden = false;
   } else {
-    statusEl.textContent = `${p2.name} ${result} Your turn.`;
+    displayTurn("p1");
     turnTaken = false;
   }
 }

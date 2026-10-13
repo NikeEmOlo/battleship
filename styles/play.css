@@ -157,12 +157,22 @@ main {
 /* -----------------------------------------------BATTLE----------------------------------- */
 
 #attack-board {
+  --banner-height: clamp(56px, 11vh, 104px);
+  --banner-gap: 16px;
+
   position: relative;
+  flex-direction: column;
+  gap: var(--banner-gap);
   flex: 1 1 auto;
   width: auto;
 
+  .turn-banner,
   .gameboard {
-    width: min(100%, 100vh - 64px);
+    width: min(100%, 100vh - 64px - var(--banner-height) - var(--banner-gap));
+  }
+
+  .gameboard {
+    max-height: none;
   }
 
   .tile {
@@ -177,6 +187,39 @@ main {
   z-index: 1;
   background: transparent center / 100% no-repeat;
   cursor: default;
+}
+
+.turn-banner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 0 0 var(--banner-height);
+  font-family: var(--handwriting);
+  font-weight: bold;
+  line-height: 1.1;
+}
+
+.turn {
+  flex: 0 0 auto;
+  padding: 0.15em 0.8em;
+  box-shadow: 2px 3px 6px 0px rgba(60, 34, 52, 0.44);
+  font-size: calc(var(--banner-height) * 0.5);
+  white-space: nowrap;
+  transform: rotate(-2deg);
+}
+
+.turn span {
+  text-transform: capitalize;
+}
+
+.turn[data-player="p1"] {
+  background: center / cover no-repeat url("/pink_card_label.png");
+  color: #0015b5;
+}
+
+.turn[data-player="p2"] {
+  background: center / cover no-repeat url("/yellow_card_label.png");
+  color: var(--biro-red);
 }
 
 .tile.target {
@@ -255,8 +298,12 @@ main {
     font-size: 0.8em;
   }
 
-  tr.active {
+  tr[data-player="p2"] {
     color: var(--biro-red);
+  }
+
+  tr.active {
+    background: rgba(255, 226, 89, 0.55);
   }
 }
 
@@ -274,8 +321,10 @@ main {
 }
 
 .status {
-  font-size: clamp(1.25rem, 2.6vw, 2.5rem);
-  line-height: 1.1;
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--biro-blue);
+  font-size: calc(var(--banner-height) * 0.36);
 }
 
 .end-turn {
@@ -426,6 +475,7 @@ dialog {
     min-width: 0;
   }
 
+  #attack-board .turn-banner,
   #attack-board .gameboard {
     width: 100%;
   }
