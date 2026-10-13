@@ -24,6 +24,7 @@ const attackBoard = document.querySelector("#attack-board .gameboard");
 const sidebar = document.querySelector(".sidebar");
 const miniMap = sidebar.querySelector(".mini-map .gameboard");
 const scores = sidebar.querySelector(".scores");
+const placingEl = document.querySelector(".placing");
 const turnEl = document.querySelector(".turn");
 const statusEl = document.querySelector(".status");
 const endTurnBtn = sidebar.querySelector(".end-turn");
@@ -82,6 +83,14 @@ function displayFleet(
     displayShip(shipEl, ship.coords, ship.rotation);
     board.appendChild(shipEl);
   });
+}
+
+function displayPlacing() {
+  // Names whose fleet is on the setup board
+  const nameEl = document.createElement("span");
+  nameEl.textContent = getActivePlayer().name;
+  placingEl.replaceChildren(nameEl, "'s fleet");
+  placingEl.dataset.player = active;
 }
 
 function moveShip(shipEl, e) {
@@ -437,7 +446,10 @@ function submitHandler(formData) {
   p2 = players.player2;
 
   gameState.mode = formData.opponent === "computer" ? "computer" : "twoPlayer";
-  console.log(gameState);
+  if (gameState.mode === "computer") {
+    continueBtn.querySelector("img").src = "/play_button.png";
+  }
+  displayPlacing();
   displayFleet(p1, setupBoard);
 }
 
@@ -456,6 +468,7 @@ function nextHandler() {
   if (gameState.mode === "twoPlayer" && active === "p1") {
     clearFleet(setupBoard);
     toggleActive();
+    displayPlacing();
     displayFleet(p2, setupBoard);
     continueBtn.querySelector("img").src = "/play_button.png";
   } else {
@@ -471,7 +484,6 @@ const continueBtn = document.querySelector(".continue");
 modalForm.addEventListener("change", formValidation);
 modalForm.addEventListener("submit", (e) => {
   let formData = Object.fromEntries(new FormData(e.currentTarget));
-  console.log(formData);
   submitHandler(formData);
 });
 
