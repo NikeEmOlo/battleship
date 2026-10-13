@@ -96,36 +96,48 @@
       <section id="winner" hidden>
         <h1></h1>
         <p class="summary"></p>
-        <div class="final-scores">
-          <table class="scores">
-            <thead>
-              <tr>
-                <th></th>
-                <th>Shots</th>
-                <th>Hits</th>
-                <th>Sunk</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr data-player="p1">
-                <th></th>
-                <td class="shots"></td>
-                <td class="hits"></td>
-                <td class="sunk"></td>
-              </tr>
-              <tr data-player="p2">
-                <th></th>
-                <td class="shots"></td>
-                <td class="hits"></td>
-                <td class="sunk"></td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="final">
+          <figure class="final-board" data-player="p1">
+            <figcaption class="name-tag" data-player="p1"></figcaption>
+            <div class="gameboard"></div>
+          </figure>
+          <div class="final-centre">
+            <div class="final-scores">
+              <table class="scores">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Shots</th>
+                    <th>Hits</th>
+                    <th>Sunk</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr data-player="p1">
+                    <th></th>
+                    <td class="shots"></td>
+                    <td class="hits"></td>
+                    <td class="sunk"></td>
+                  </tr>
+                  <tr data-player="p2">
+                    <th></th>
+                    <td class="shots"></td>
+                    <td class="hits"></td>
+                    <td class="sunk"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <button class="play-again">
+              <img src="/play_button.png" alt="Play again" />
+            </button>
+            <a class="home-link" href="index.html">Back to home</a>
+          </div>
+          <figure class="final-board" data-player="p2">
+            <figcaption class="name-tag" data-player="p2"></figcaption>
+            <div class="gameboard"></div>
+          </figure>
         </div>
-        <button class="play-again">
-          <img src="/play_button.png" alt="Play again" />
-        </button>
-        <a class="home-link" href="index.html">Back to home</a>
         <img src="/palm_tree.png" alt="" class="palm-tree" />
         <img src="/seagull.png" alt="" class="seagull" />
       </section>

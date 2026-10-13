@@ -235,19 +235,29 @@ main {
   transform: rotate(3deg);
 }
 
+.name-tag {
+  padding: 0.15em 0.8em;
+  box-shadow: 2px 3px 6px 0px rgba(60, 34, 52, 0.44);
+  font-size: clamp(1.25rem, 2.4vw, 2.25rem);
+  transform: rotate(-2deg);
+}
+
 .turn span,
-.placing span {
+.placing span,
+.name-tag span {
   text-transform: capitalize;
 }
 
 .turn[data-player="p1"],
-.placing[data-player="p1"] {
+.placing[data-player="p1"],
+.name-tag[data-player="p1"] {
   background: center / cover no-repeat url("/pink_card_label.png");
   color: #0015b5;
 }
 
 .turn[data-player="p2"],
-.placing[data-player="p2"] {
+.placing[data-player="p2"],
+.name-tag[data-player="p2"] {
   background: center / cover no-repeat url("/yellow_card_label.png");
   color: var(--biro-red);
 }
@@ -436,7 +446,7 @@ dialog button:hover {
     background: center / cover no-repeat url("/pink_card_label.png");
     box-shadow: 3px 5px 10px 0px rgba(60, 34, 52, 0.44);
     color: #0015b5;
-    font-size: clamp(2.75rem, 9vw, 7.5rem);
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
     line-height: 1.1;
     transform: rotate(-3deg);
   }
@@ -449,10 +459,40 @@ dialog button:hover {
     font-size: clamp(1.25rem, 3vw, 2.5rem);
   }
 
-  .final-scores {
+  .final {
     z-index: 1;
-    width: min(100%, 44rem);
-    padding: clamp(1rem, 3vw, 2.5rem);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(15rem, 24rem) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(1rem, 3vw, 3rem);
+    width: min(100%, 100rem);
+  }
+
+  .final-board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .final-board .gameboard {
+    width: min(100%, 50vh);
+  }
+
+  .final-board .ship {
+    pointer-events: none;
+  }
+
+  .final-centre {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(0.75rem, 2.5vh, 2rem);
+  }
+
+  .final-scores {
+    width: 100%;
+    padding: clamp(0.75rem, 1.5vw, 1.5rem);
     background: #fff;
     box-shadow: 3px 5px 12px 0px rgba(60, 34, 52, 0.3);
     transform: rotate(1deg);
@@ -482,7 +522,7 @@ dialog button:hover {
   .palm-tree,
   .seagull {
     position: absolute;
-    width: clamp(9rem, 22vw, 24rem);
+    width: clamp(7rem, 13vw, 15rem);
   }
 
   .palm-tree {
@@ -652,6 +692,18 @@ dialog {
 
   .context {
     min-width: 0;
+  }
+
+  #winner .final {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  #winner .final-centre {
+    order: 1;
+  }
+
+  #winner .final-board .gameboard {
+    width: min(100%, 26rem);
   }
 
   #attack-board .turn-banner,

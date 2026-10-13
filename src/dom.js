@@ -87,9 +87,7 @@ function displayFleet(
 
 function displayPlacing() {
   // Names whose fleet is on the setup board
-  const nameEl = document.createElement("span");
-  nameEl.textContent = getActivePlayer().name;
-  placingEl.replaceChildren(nameEl, "'s fleet");
+  nameLabel(placingEl, getActivePlayer().name, "'s fleet");
   placingEl.dataset.player = active;
 }
 
@@ -238,9 +236,7 @@ function displayTurn(key = active) {
   if (computer) {
     turnEl.textContent = key === "p1" ? "Your turn" : "Computer's turn";
   } else {
-    const nameEl = document.createElement("span");
-    nameEl.textContent = name;
-    turnEl.replaceChildren(nameEl, "'s turn");
+    nameLabel(turnEl, name, "'s turn");
   }
   turnEl.dataset.player = key;
 
@@ -342,11 +338,24 @@ async function gameOver() {
     : ["p2", p2, p1];
   const computer = gameState.mode === "computer";
 
-  const nameEl = document.createElement("span");
-  nameEl.textContent = winner.name;
   const title = winnerScreen.querySelector("h1");
-  title.replaceChildren(nameEl, " wins!");
+  nameLabel(title, winner.name, " wins!");
   if (computer && key === "p1") title.textContent = "You win!";
+
+  // Both fleets are revealed in full, with every shot taken at them
+  [
+    ["p1", p1],
+    ["p2", p2],
+  ].forEach(([playerKey, player]) => {
+    const figure = winnerScreen.querySelector(
+      `.final-board[data-player="${playerKey}"]`,
+    );
+    const board = figure.querySelector(".gameboard");
+    nameLabel(figure.querySelector(".name-tag"), player.name, "'s fleet");
+    clearFleet(board);
+    displayShots(player, board);
+    displayFleet(player, board);
+  });
 
   winnerScreen.querySelector(".summary").textContent =
     computer && key === "p2"
@@ -412,6 +421,13 @@ function getOpponent() {
 
 function tileOn(board, [x, y]) {
   return board.querySelector(`[data-index="${x * 10 + y}"]`);
+}
+
+function nameLabel(el, name, text) {
+  // The name sits in its own span so that only it is capitalised
+  const nameEl = document.createElement("span");
+  nameEl.textContent = name;
+  el.replaceChildren(nameEl, text);
 }
 
 function wait(ms) {
