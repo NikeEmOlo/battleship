@@ -92,14 +92,42 @@
           </button>
         </form>
       </dialog>
-      <dialog id="game-over">
-        <form method="dialog">
-          <p></p>
-          <button type="submit">
-            <img src="/play_button.png" alt="Play again" />
-          </button>
-        </form>
-      </dialog>
+      <section id="winner" hidden>
+        <h1></h1>
+        <p class="summary"></p>
+        <div class="final-scores">
+          <table class="scores">
+            <thead>
+              <tr>
+                <th></th>
+                <th>Shots</th>
+                <th>Hits</th>
+                <th>Sunk</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-player="p1">
+                <th></th>
+                <td class="shots"></td>
+                <td class="hits"></td>
+                <td class="sunk"></td>
+              </tr>
+              <tr data-player="p2">
+                <th></th>
+                <td class="shots"></td>
+                <td class="hits"></td>
+                <td class="sunk"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="play-again">
+          <img src="/play_button.png" alt="Play again" />
+        </button>
+        <a class="home-link" href="index.html">Back to home</a>
+        <img src="/palm_tree.png" alt="" class="palm-tree" />
+        <img src="/seagull.png" alt="" class="seagull" />
+      </section>
       <dialog open id="choose-players">
         <form method="dialog">
           <div class="name-wrap">

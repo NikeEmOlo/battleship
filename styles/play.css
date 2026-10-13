@@ -337,6 +337,110 @@ main {
   border: none;
 }
 
+/* -----------------------------------------------WINNER----------------------------------- */
+
+#winner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.75rem, 2.5vh, 2rem);
+  flex: 1 1 auto;
+  min-height: 100vh;
+  padding: 32px;
+  background: center / cover no-repeat url("/background_math_paper.webp");
+  color: var(--biro-blue);
+  font-family: var(--handwriting);
+  font-weight: bold;
+  text-align: center;
+  overflow: hidden;
+
+  h1 {
+    padding: 0.1em 0.8em;
+    background: center / cover no-repeat url("/pink_card_label.png");
+    box-shadow: 3px 5px 10px 0px rgba(60, 34, 52, 0.44);
+    color: #0015b5;
+    font-size: clamp(2.75rem, 9vw, 7.5rem);
+    line-height: 1.1;
+    transform: rotate(-3deg);
+  }
+
+  h1 span {
+    text-transform: capitalize;
+  }
+
+  .summary {
+    font-size: clamp(1.25rem, 3vw, 2.5rem);
+  }
+
+  .final-scores {
+    z-index: 1;
+    width: min(100%, 44rem);
+    padding: clamp(1rem, 3vw, 2.5rem);
+    background: #fff;
+    box-shadow: 3px 5px 12px 0px rgba(60, 34, 52, 0.3);
+    transform: rotate(1deg);
+  }
+
+  .play-again {
+    z-index: 1;
+    width: clamp(10rem, 16vw, 16rem);
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 150ms ease;
+  }
+
+  .play-again:hover {
+    transform: scale(1.06) rotate(-2deg);
+  }
+
+  .home-link {
+    z-index: 1;
+    color: inherit;
+    font-size: clamp(1.1rem, 2vw, 1.75rem);
+  }
+
+  .palm-tree,
+  .seagull {
+    position: absolute;
+    width: clamp(9rem, 22vw, 24rem);
+  }
+
+  .palm-tree {
+    bottom: -40px;
+    left: -40px;
+    transform: rotate(15deg);
+  }
+
+  .seagull {
+    right: -70px;
+    bottom: -20px;
+    transform: rotate(10deg);
+  }
+}
+
+#winner[data-player="p2"] h1 {
+  background-image: url("/yellow_card_label.png");
+  color: var(--biro-red);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  #winner h1 {
+    animation: stamp 500ms cubic-bezier(0.2, 1.4, 0.4, 1) both;
+  }
+}
+
+@keyframes stamp {
+  from {
+    opacity: 0;
+    transform: rotate(-12deg) scale(2.2);
+  }
+}
+
 /* -----------------------------------------------DIALOGUE----------------------------------- */
 
 main:has(dialog[open]) {

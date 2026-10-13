@@ -29,7 +29,7 @@ const statusEl = document.querySelector(".status");
 const endTurnBtn = sidebar.querySelector(".end-turn");
 const turnPopup = document.querySelector(".turn-popup");
 const passDialog = document.querySelector("#pass-device");
-const gameOverDialog = document.querySelector("#game-over");
+const winnerScreen = document.querySelector("#winner");
 
 //============================================FUNCTIONS================//
 
@@ -199,10 +199,22 @@ function displayScores() {
     ["p1", p1, p2],
     ["p2", p2, p1],
   ].forEach(([key, player, opponent]) => {
-    const row = scores.querySelector(`[data-player="${key}"]`);
-    row.querySelector("th").textContent = player.name;
-    row.querySelector(".hits").textContent = opponent.board.hits.length;
-    row.querySelector(".sunk").textContent = opponent.board.sunk.length;
+    const hits = opponent.board.hits.length;
+    const shots = hits + opponent.board.missed.length;
+    const stats = {
+      th: player.name,
+      ".shots": shots,
+      ".hits": hits,
+      ".sunk": opponent.board.sunk.length,
+    };
+
+    // The winner screen has its own, fuller copy of the table
+    document.querySelectorAll(`.scores [data-player="${key}"]`).forEach((row) =>
+      Object.entries(stats).forEach(([selector, value]) => {
+        const cell = row.querySelector(selector);
+        if (cell) cell.textContent = value;
+      }),
+    );
   });
 }
 
@@ -260,7 +272,9 @@ function attack(tile) {
     statusEl.textContent = sunk === undefined ? "Miss!" : "Hit!";
   }
 
-  if (gameState.mode === "computer" && !opponent.board.allSunk) {
+  if (opponent.board.allSunk) {
+    gameOver();
+  } else if (gameState.mode === "computer") {
     computerTurn();
   } else {
     endTurnBtn.hidden = false;
@@ -292,7 +306,7 @@ async function computerTurn() {
 
   statusEl.textContent = `${p2.name} ${result}`;
   if (p1.board.allSunk) {
-    endTurnBtn.hidden = false;
+    gameOver();
   } else {
     displayTurn("p1");
     turnTaken = false;
@@ -300,20 +314,40 @@ async function computerTurn() {
 }
 
 function endTurn() {
-  if (p1.board.allSunk || p2.board.allSunk) {
-    gameOver();
-  } else {
-    toggleActive();
-    passDevice();
-  }
+  toggleActive();
+  passDevice();
 }
 
-function gameOver() {
+async function gameOver() {
   // Whoever has no ships left is the loser
-  const [winner, loser] = p2.board.allSunk ? [p1, p2] : [p2, p1];
-  gameOverDialog.querySelector("p").textContent =
-    `${winner.name} wins! All of ${loser.name}'s ships are sunk.`;
-  gameOverDialog.show();
+  const [key, winner, loser] = p2.board.allSunk
+    ? ["p1", p1, p2]
+    : ["p2", p2, p1];
+  const computer = gameState.mode === "computer";
+
+  const nameEl = document.createElement("span");
+  nameEl.textContent = winner.name;
+  const title = winnerScreen.querySelector("h1");
+  title.replaceChildren(nameEl, " wins!");
+  if (computer && key === "p1") title.textContent = "You win!";
+
+  winnerScreen.querySelector(".summary").textContent =
+    computer && key === "p2"
+      ? "All of your ships are sunk."
+      : `All of ${loser.name}'s ships are sunk.`;
+  winnerScreen.dataset.player = key;
+  winnerScreen
+    .querySelectorAll("tbody tr")
+    .forEach((row) =>
+      row.classList.toggle("active", row.dataset.player === key),
+    );
+  displayScores();
+
+  // Leave the final shot on screen for a moment first
+  await wait(1800);
+  attackBoard.parentElement.hidden = true;
+  sidebar.hidden = true;
+  winnerScreen.hidden = false;
 }
 
 function startGame() {
@@ -452,4 +486,6 @@ attackBoard.addEventListener("click", (e) => {
 
 endTurnBtn.addEventListener("click", endTurn);
 passDialog.addEventListener("close", startTurn);
-gameOverDialog.addEventListener("close", () => location.reload());
+winnerScreen
+  .querySelector(".play-again")
+  .addEventListener("click", () => location.reload());
