@@ -52,7 +52,7 @@ export function createShip(name) {
   let hits = 0;
   let coords = shipTypes[name].start;
   const size = shipTypes[name].size;
-  let rotation = shipTypes[name].rotation
+  let rotation = shipTypes[name].rotation;
 
   return {
     name,

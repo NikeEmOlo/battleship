@@ -17,6 +17,7 @@ export function createGameBoard() {
   let ready = false;
   let missed = [];
   let hits = [];
+  let lastAttack = null;
 
   return {
     fleet,
@@ -108,6 +109,7 @@ export function createGameBoard() {
     receiveAttack(coord) {
       const [x, y] = coord;
       if (this.attacked(coord)) return null;
+      lastAttack = coord;
 
       // Search the fleet for any ship occupying this coordinate
       for (const ship of Object.values(fleet)) {
@@ -129,6 +131,10 @@ export function createGameBoard() {
 
     get hits() {
       return hits;
+    },
+
+    get lastAttack() {
+      return lastAttack;
     },
 
     get sunk() {

@@ -115,3 +115,15 @@ test("a fleet placed at random stays on the grid without overlapping", () => {
     expect(board.coordValidation(cells)).toBe(true);
   }
 });
+
+test("the latest attack is remembered", () => {
+  const board = createGameBoard();
+  expect(board.lastAttack).toBe(null);
+
+  board.receiveAttack([0, 0]);
+  board.receiveAttack([9, 9]);
+  expect(board.lastAttack).toEqual([9, 9]);
+
+  board.receiveAttack([0, 0]);
+  expect(board.lastAttack).toEqual([9, 9]);
+});

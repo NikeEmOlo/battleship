@@ -164,7 +164,7 @@ function displayShots(owner, board) {
   // Marks every attack that has been made against the owner's fleet
   board
     .querySelectorAll(".tile")
-    .forEach((tile) => tile.classList.remove("hit", "miss", "sunk"));
+    .forEach((tile) => tile.classList.remove("hit", "miss", "sunk", "last"));
 
   owner.board.hits.forEach((coord) =>
     tileOn(board, coord).classList.add("hit"),
@@ -175,6 +175,9 @@ function displayShots(owner, board) {
   owner.board.sunk
     .flatMap((ship) => ship.coords)
     .forEach((coord) => tileOn(board, coord).classList.add("sunk"));
+
+  const last = owner.board.lastAttack;
+  if (last) tileOn(board, last).classList.add("last");
 }
 
 function displayAttackBoard() {
@@ -246,8 +249,13 @@ function passDevice() {
   passDialog.show();
 }
 
+function setTurnTaken(taken) {
+  turnTaken = taken;
+  attackBoard.classList.toggle("locked", taken);
+}
+
 function startTurn() {
-  turnTaken = false;
+  setTurnTaken(false);
   endTurnBtn.hidden = true;
   statusEl.textContent = "Pick a square to attack";
   displayTurn();
@@ -262,7 +270,7 @@ function attack(tile) {
   if (turnTaken || opponent.board.attacked(coord)) return;
 
   const sunk = opponent.board.receiveAttack(coord);
-  turnTaken = true;
+  setTurnTaken(true);
 
   displayAttackBoard();
   displayScores();
@@ -309,7 +317,7 @@ async function computerTurn() {
     gameOver();
   } else {
     displayTurn("p1");
-    turnTaken = false;
+    setTurnTaken(false);
   }
 }
 

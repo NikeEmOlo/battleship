@@ -177,6 +177,17 @@ main {
 
   .tile {
     cursor: crosshair;
+    transition: background-color 120ms ease;
+  }
+
+  .tile:not(.hit, .miss, .sunk):hover {
+    background-color: #bfe9f7;
+    box-shadow: inset 0 0 0 3px var(--biro-blue);
+  }
+
+  .gameboard.locked .tile {
+    cursor: default;
+    pointer-events: none;
   }
 }
 
@@ -220,6 +231,22 @@ main {
 .turn[data-player="p2"] {
   background: center / cover no-repeat url("/yellow_card_label.png");
   color: var(--biro-red);
+}
+
+.tile.last {
+  box-shadow: inset 0 0 0 3px var(--biro-red);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tile.last {
+    animation: pop 350ms cubic-bezier(0.2, 1.6, 0.4, 1);
+  }
+}
+
+@keyframes pop {
+  from {
+    background-size: 0%;
+  }
 }
 
 .tile.target {
